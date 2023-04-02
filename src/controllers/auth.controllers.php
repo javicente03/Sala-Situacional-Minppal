@@ -44,5 +44,13 @@ function LoginPost() {
     //     header('Location: /auth/login');
     // }
 
-    echo "hola";
+    require 'src/database/connection.php';
+    $sql = "SELECT * FROM companies";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->execute();
+
+    $companys = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode($_REQUEST['email']);
 }

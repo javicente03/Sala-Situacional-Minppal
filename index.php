@@ -6,7 +6,6 @@ use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
 require_once 'src/controllers/auth.controllers.php';
 
-
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', 'Home');
     $r->addRoute('GET', '/enter', 'Sesion');

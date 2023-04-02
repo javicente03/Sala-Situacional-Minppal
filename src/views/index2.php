@@ -49,7 +49,7 @@ include_once 'src/blocks/headerLanding.php';
                 <div class="space-40"></div>
                 <!-- <div class="space-100"></div> -->
                 <h1>Ministerio del Poder Popular Para la Alimentación<br> <h3>Sala Situacional</h3></h1>
-                <form id='form' >
+                <form id='form' data-url="/auth/login" data-method="post">
                     <input type="email" class="form-control inputPrincipal" placeholder="Ingrese su correo electrónico" name="email" id="email">
                         <div class="space-10"></div>
                     <div class='containerDual inputPrincipal'>

@@ -5,6 +5,11 @@ $('#form').submit(function(event) {
     
     // obtener datos del formulario
     let data = $(this).serializeArray();
+    // obtener method y url desde las data del formulario
+    let method = $(this).data('method');
+    let url = $(this).data('url');
+
+    console.log(method, url)
 
     // enviar datos al servidor
     $.ajax({
@@ -12,7 +17,8 @@ $('#form').submit(function(event) {
         type: 'POST',
         data: data,
         success: function(response) {
-            console.log(response);
+            let res = JSON.parse(response);
+            console.log(res);
         },
         error: function(error) {
             console.log(error);
@@ -22,14 +28,14 @@ $('#form').submit(function(event) {
         },
         // saber cuanta data se esta enviando
         xhr: function() {
+            // imprimir porcentaje en tiempo real
             let xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener('progress', function(e) {
                 if (e.lengthComputable) {
                     let percent = Math.round((e.loaded / e.total) * 100);
                     console.log(percent);
                 }
-            }, false);
-            return xhr;
+            });
         }
     });
 });
