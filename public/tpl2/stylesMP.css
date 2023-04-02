@@ -1,0 +1,77 @@
+.btnPrincipal {
+  border-radius: 20px;
+  width: 400px;
+  margin: 0 auto;
+  background-color: #1255ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+}
+
+.containerDual {
+  position: relative;
+  display: inline-block;
+}
+
+.header-background {
+  background: linear-gradient(45deg, #FFD700, #FFD700 33.33%, #00247D 33.33%, #00247D 66.66%, #CE1126 66.66%);
+}
+
+.header-blue {
+  background: #00247d;
+}
+
+.inputPrincipal {
+  border-radius: 20px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.inputPassword {
+  width: 100%;
+}
+
+.mainmenu-area.affix {
+  /* una gradacion que haga juego con la de arriba */
+  background: #ce1127c9;
+}
+
+.single_screen_slide {
+  background: none;
+}
+
+.titleShadow {
+  text-shadow: #000 1px 1px 4px;
+  font-weight: 700;
+  font-size: 2.5em;
+  color: #00004f;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  text-align: center;
+  line-height: 1.2em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.visibility {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding: 8px;
+  background-color: transparent;
+  color: #000;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+}
+
+.visibility:focus, .inputPrincipal:focus {
+  outline: none;
+  color: #000;
+}
+
+@media screen and (max-width: 500px) {
+    .inputPrincipal, .btnPrincipal {
+        width: 100%;
+    }
+}
