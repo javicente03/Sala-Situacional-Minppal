@@ -7,50 +7,98 @@
 
 function Home() {
     // incluimos la vista de la pagina principal
-    include_once 'src/views/index2.php';
-}
+    $path_now = $_SERVER['REQUEST_URI'];
 
-function Sesion() {
-    // incluimos la vista de la pagina principal
-    include_once 'src/views/enter.php';
+    if ($path_now == '/login' && isset($_SESSION['user'])) {
+        header('Location: /');
+    }
+    $title = "MINPPAL - Sala Situacional";
+    // obtener el path actual
+    include_once 'src/blocks/headerLanding.php';
+    include_once 'src/views/index.php';
 }
 
 // declaramos la funcion Login que se encarga recibir los datos del formulario de login y validarlos
 
 function LoginPost() {
     // validamos que el usuario haya enviado los datos del formulario
-    // if (isset($_POST['username']) && isset($_POST['password'])) {
-    //     // recibimos los datos del formulario
-    //     $username = $_POST['username'];
-    //     $password = $_POST['password'];
-    //     // validamos que los datos no esten vacios
-    //     if (!empty($username) && !empty($password)) {
-    //         // validamos que el usuario y la contraseña sean correctos
-    //         if ($username == 'admin' && $password == 'admin') {
-    //             // si el usuario y la contraseña son correctos, redireccionamos a la pagina principal
-    //             // llamar a la funcion GenerateTokenJWT y pasar la informacion del usuario
-                
-    //             header('Location: /enter');
-    //         } else {
-    //             // si el usuario y la contraseña son incorrectos, redireccionamos a la pagina de login
-    //             header('Location: /auth/login');
-    //         }
-    //     } else {
-    //         // si los datos estan vacios, redireccionamos a la pagina de login
-    //         header('Location: /auth/login');
-    //     }
-    // } else {
-    //     // si el usuario no ha enviado los datos del formulario, redireccionamos a la pagina de login
-    //     header('Location: /auth/login');
-    // }
+    try {
 
-    require 'src/database/connection.php';
-    $sql = "SELECT * FROM companies";
-    $stmt = $conn->prepare($sql);
+        if (isset($_SESSION['user'])) {
+            throw new Exception('Ya hay una sesión iniciada');
+        }
 
-    $stmt->execute();
+        if (!isset($_POST['email']) || !isset($_POST['password'])) {
+            throw new Exception('No se recibieron los datos del formulario');
+        }
 
-    $companys = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    echo json_encode($_REQUEST['email']);
+        // obtenemos los datos del formulario
+        $email = trim(addslashes($_POST['email']));
+        $password = trim(addslashes($_POST['password']));
+
+        if (empty($email) || empty($password)) {
+            throw new Exception('Los datos del formulario no pueden estar vacios');
+        }
+
+        require 'src/database/connection.php';
+
+        // Buscamos el usuario en la base de datos
+        $sql = "SELECT * FROM users WHERE email_user = :email";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            throw new Exception('El usuario no existe');
+        }
+
+        // Verificamos la contraseña
+        if (!password_verify($password, $user['password_user'])) {
+            throw new Exception('La contraseña es incorrecta');
+        }
+
+        // Almacenar datos del usuario en la sesión
+        $_SESSION['user'] = $user['name_user'];
+        $_SESSION['email'] = $user['email_user'];
+        $_SESSION['id'] = $user['id_user'];
+        $_SESSION['role'] = $user['role_user'];
+
+        $response = [
+            'message' => 'Bienvenido ' . $user['name_user'],
+            'user' => $user
+        ];
+
+        // mandar el codigo de respuesta 200
+        echo json_encode($response);
+        
+    } catch (\Throwable $th) {
+        // mandar el error al cliente con codigo 400 pero enviar el mensaje de error
+        echo json_encode([
+            'error' => $th->getMessage()
+        ]);
+
+        http_response_code(400);
+    }
+}
+
+function Sesion() {
+    if (isset($_SESSION['role'])) {
+        if ($_SESSION['role'] == 'admin') {
+            header('Location: /admin/users');
+        } else {
+            echo 'Bienvenido Usuario';
+
+            session_destroy();
+        }
+    } else {
+        // redireccionar a la pagina de login
+        header('Location: /login');
+    }
+}
+
+function Logout() {
+    session_destroy();
+    header('Location: /login');
 }

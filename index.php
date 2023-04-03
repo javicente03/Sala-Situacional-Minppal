@@ -5,26 +5,28 @@ require 'vendor/autoload.php';
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
 require_once 'src/controllers/auth.controllers.php';
+require_once 'src/controllers/admin.controllers.php';
+session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', 'Home');
-    $r->addRoute('GET', '/enter', 'Sesion');
+    $r->addRoute('GET', '/login', 'Home');
+    $r->addRoute('GET', '/session', 'Sesion');
 
     // rutas para el controlador de autenticación
     $r->addGroup('/auth', function (RouteCollector $r) {
-        $r->addRoute('GET', '/login', 'Home');
         $r->addRoute('POST', '/login', 'LoginPost');
+        $r->addRoute('GET', '/logout', 'Logout');
     });
 
-    
-    $r->addGroup('/protected', function (RouteCollector $r) {
-        $r->addRoute('GET', '/users', function () {
-            echo "Listado de usuarios";
-        }, ['middleware1']);
-        $r->addRoute('GET', '/users/{id:\d+}', 'GetUser');
-        $r->addRoute('POST', '/users', 'CreateUser');
-        $r->addRoute('PUT', '/users/{id:\d+}', 'UpdateUser');
-        $r->addRoute('DELETE', '/users/{id:\d+}', 'DeleteUser');
+    $r->addGroup('/admin', function (RouteCollector $r) {
+        $r->addRoute('GET', '/users', 'Admin_Users_Get');
+    });
+
+    $r->addRoute('GET', '/generarHash', function() {
+        $password = '123456';
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        echo $hash;
     });
 
 });

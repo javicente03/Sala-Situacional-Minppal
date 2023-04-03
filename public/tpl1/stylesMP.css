@@ -1,0 +1,11 @@
+.header, .mobile-notification-tabs {
+    background-color: #001640;
+}
+
+.search-bar, .search-bar.w-search, .search-bar .form-group.with-button button {
+    background-color: #002d82;
+}
+
+.fixed-sidebar .logo {
+    background-color: #da9f20;
+}

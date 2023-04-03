@@ -1,0 +1,33 @@
+.loader {
+    border: 8px solid #b2d6ff;
+    /* color del borde */
+    border-top: 8px solid #ff002b;
+    /* color del borde superior */
+    border-radius: 50%;
+    /* forma redondeada */
+    width: 60px;
+    /* ancho */
+    height: 60px;
+    /* alto */
+    animation: spin 1s ease-in-out infinite;
+    /* animación */
+    margin: auto;
+    /* centrado */
+    display: none;
+}
+
+.loader.show {
+    display: block;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        /* ángulo inicial */
+    }
+
+    100% {
+        transform: rotate(360deg);
+        /* ángulo final */
+    }
+}

@@ -9,6 +9,7 @@
     <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/js/ajaxchimp.js'; ?>"></script>
     <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/js/wow.min.js'; ?>"></script>
     <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/js/main.js'; ?>"></script>
+    <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/toast.js'; ?>"></script>
     <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/form.js'; ?>"></script>
 </body>
 

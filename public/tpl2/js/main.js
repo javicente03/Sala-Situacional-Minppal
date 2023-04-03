@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
     /* Scroll to top
     ===================*/
     $.scrollUp({
-        scrollText: '<span class="ti-rocket"></span>',
+        scrollText: '<span class="ti-angle-double-up"></span>',
         easingType: 'linear',
         scrollSpeed: 900,
         animation: 'fade'
