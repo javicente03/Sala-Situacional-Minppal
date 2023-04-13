@@ -12,6 +12,14 @@ function Home() {
     if ($path_now == '/login' && isset($_SESSION['user'])) {
         header('Location: /');
     }
+
+    require 'src/database/connection.php';
+
+    $sql = "SELECT * FROM companies";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     $title = "MINPPAL - Sala Situacional";
     // obtener el path actual
     include_once 'src/blocks/headerLanding.php';

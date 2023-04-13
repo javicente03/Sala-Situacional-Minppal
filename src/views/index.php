@@ -101,52 +101,34 @@
                 <div class="space-100"></div>
                 <div class="home_screen_slide_main">
                     <div class="home_text_slide">
-                        <div class="item">
-                            <h1>It’s all about <br />Promoting your Business</h1>
-                            <div class="space-10"></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-                            <div class="space-50"></div>
-                            <a href="https://www.youtube.com/watch?v=iaj8ktgL3BY" class="btn btn-icon video-popup"><span class="ti-control-play"></span>Watch Video</a>
-                        </div>
-                        <div class="item">
-                            <h1>It’s all about <br />Promoting your Business</h1>
-                            <div class="space-10"></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-                            <div class="space-50"></div>
-                            <a href="https://www.youtube.com/watch?v=iaj8ktgL3BY" class="btn btn-icon video-popup"><span class="ti-control-play"></span>Watch Video</a>
-                        </div>
-                        <div class="item">
-                            <h1>It’s all about <br />Promoting your Business</h1>
-                            <div class="space-10"></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-                            <div class="space-50"></div>
-                            <a href="https://www.youtube.com/watch?v=iaj8ktgL3BY" class="btn btn-icon video-popup"><span class="ti-control-play"></span>Watch Video</a>
-                        </div>
-                        <div class="item">
-                            <h1>It’s all about <br />Promoting your Business</h1>
-                            <div class="space-10"></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-                            <div class="space-50"></div>
-                            <a href="https://www.youtube.com/watch?v=iaj8ktgL3BY" class="btn btn-icon video-popup"><span class="ti-control-play"></span>Watch Video</a>
-                        </div>
-                        <div class="item">
-                            <h1>It’s all about <br />Promoting your Business</h1>
-                            <div class="space-10"></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </p>
-                            <div class="space-50"></div>
-                            <a href="https://www.youtube.com/watch?v=iaj8ktgL3BY" class="btn btn-icon video-popup"><span class="ti-control-play"></span>Watch Video</a>
-                        </div>
+                        <?php foreach ($companies as $company) { ?>
+                            <div class="item">
+                                <h1>
+                                    <?php echo $company['name_company']; ?>
+                                </h1>
+                                <div class="space-10"></div>
+                                <h3>Misión</h3>
+                                <p>
+                                    <?php echo $company['mision_company']; ?>
+                                </p>
+                                <div class="space-50"></div>
+                                <h3>Visión</h3>
+                                <p>
+                                    <?php echo $company['vision_company']; ?>
+                                </p>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4">
                 <div class="home_screen_slide">
                     <div class="single_screen_slide wow fadeInRight">
-                        <div class="item"><img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/images/mercal_logo.webp' ?>" alt=""></div>
-                        <div class="item"><img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/images/mercal_logo.webp' ?>" alt=""></div>
-                        <div class="item"><img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/images/screen/screen3.jpg' ?>" alt=""></div>
-                        <div class="item"><img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/images/screen/screen4.jpg' ?>" alt=""></div>
-                        <div class="item"><img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/images/screen/screen5.jpg' ?>" alt=""></div>
+                        <?php foreach ($companies as $company) { ?>
+                            <div class="item">
+                                <img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/'.$company['logo_company']; ?>" alt="logo">
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="home_screen_nav hidden-xs hidden-sm">

@@ -58,8 +58,9 @@
                         <table class="event-item-table">
                             <thead>
                                 <tr class="headers-table">
-                                    <th class="upcoming">Fecha de Registro</th>
-                                    <th class="author">Nombre</th>
+                                    <th class="description">ID</th>
+                                    <th class="description">Fecha de Registro</th>
+                                    <th class="description">Nombre</th>
                                     <th class="description">Correo Electrónico</th>
                                     <th class="description">Rol</th>
                                     <th class="description">Estado</th>
@@ -84,6 +85,9 @@
                                         $class_status_user = $user['active_user'] == 1 ? 'text-success' : 'text-danger';
                                     ?>
                                     <tr class="event-item" key={index}>
+                                        <td class="upcoming">
+                                            #<?php echo $user['id_user'] ?>
+                                        </td>
                                         <td class="upcoming">
                                             <div class="date-event">
                                                 <svg class="olymp-small-calendar-icon"><use href="#olymp-small-calendar-icon"></use></svg>

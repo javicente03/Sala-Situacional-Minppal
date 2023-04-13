@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                            <button class="btn btn-primary btn-lg full-width" type="submit">Crear Usuario</button>
+                            <button class="btn btn-primary btn-lg full-width" type="submit">Guardar Cambios</button>
                             <!-- Hacer una barra de progreso indefinida para esperar la respuesta del servidor -->
                             <div class="loader"></div>
                         </div>

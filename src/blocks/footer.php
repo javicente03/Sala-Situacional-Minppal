@@ -15,6 +15,7 @@
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/Bootstrap/dist/js/bootstrap.bundle.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/svg-loader.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/form.js'; ?>"></script>
+<script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/form-fichero.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/toast.js'; ?>"></script>
 
 </body>

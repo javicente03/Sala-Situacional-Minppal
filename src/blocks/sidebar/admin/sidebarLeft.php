@@ -21,6 +21,13 @@
                         </svg>
 					</a>
 				</li>
+				<li>
+					<a href="/admin/companies">
+						<svg class="olymp-newsfeed-icon left-menu-icon" data-bs-toggle="tooltip" data-bs-placement="right"   data-bs-original-title="Administrador de Empresas">
+							<i class="fas fa-building" style="font-size: 20px;"></i>
+						</svg>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -49,6 +56,14 @@
                         </svg> -->
                         <i class="fas fa-users" style="font-size: 20px;"></i>
 						<span class="left-menu-title" style="margin-right: 10px;"> &nbsp; Administrador de Usuarios</span>
+					</a>
+				</li>
+				<li>
+					<a href="/admin/companies">
+						<!-- <svg class="olymp-newsfeed-icon left-menu-icon" data-bs-toggle="tooltip" data-bs-placement="right"   data-bs-original-title="NEWSFEED">
+						</svg> -->
+						<i class="fas fa-building" style="font-size: 20px;"></i>
+						<span class="left-menu-title" style="margin-right: 10px;"> &nbsp; Administrador de Empresas</span>
 					</a>
 				</li>
 			</ul>
@@ -106,6 +121,20 @@
 					<a href="#" class="js-sidebar-open">
 						<svg class="olymp-close-icon left-menu-icon"><use xlink:href="#olymp-close-icon"></use></svg>
 						<span class="left-menu-title">Cerrar Menú</span>
+					</a>
+				</li>
+				<li>
+					<a href="/admin/users">
+
+						<i class="fas fa-users" style="font-size: 20px; margin-right: 10px"></i>
+						<span>Administrador de Usuarios</span>
+					</a>
+				</li>
+				<li>
+					<a href="/admin/companies">
+
+						<i class="fas fa-building" style="font-size: 20px; margin-right: 10px"></i>
+						<span>Administrador de Empresas</span>
 					</a>
 				</li>
 				<li>

@@ -20,11 +20,18 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     });
 
     $r->addGroup('/admin', function (RouteCollector $r) {
+        // Usuarios
         $r->addRoute('GET', '/users', 'Admin_Users_Get');
         $r->addRoute('GET', '/users/create', 'Admin_Users_Create');
         $r->addRoute('POST', '/users/create', 'Admin_Users_Post');
         $r->addRoute('GET', '/users/edit/{id}', 'Admin_Users_Edit');
         $r->addRoute('POST', '/users/edit', 'Admin_Users_Put');
+
+        // Compañías
+        $r->addRoute('GET', '/companies/create-list', 'Create_First_Companies');
+        $r->addRoute('GET', '/companies', 'Admin_Companies_Get');
+        $r->addRoute('GET', '/companies/edit/{id}', 'Admin_Company_Edit');
+        $r->addRoute('POST', '/companies/edit', 'Admin_Companies_Put');
     });
 
     $r->addRoute('GET', '/generarHash', function() {
