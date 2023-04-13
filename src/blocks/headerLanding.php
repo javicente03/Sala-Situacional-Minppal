@@ -28,8 +28,8 @@
     <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/css/normalize.css'; ?>">
     <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/style.css'; ?>">
     <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/stylesMP.css'; ?>">
-    <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/css/toast.css'; ?>">
     <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/css/loader.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/css/toast.css'; ?>">
     <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/css/responsive.css'; ?>">
     <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/js/vendor/modernizr-2.8.3.min.js'; ?>"></script>
 </head>

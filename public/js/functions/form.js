@@ -9,8 +9,8 @@ $('#form').submit(function(event) {
     btn.css('display', 'none');
     // obtener el .loader del formulario
     let loader = $(this).find('.loader');
-    // agregar la clase .show al loader
-    loader.addClass('show');
+    // agregar la clase .showToast al loader
+    loader.addClass('showToast');
     
     // obtener datos del formulario
     let data = $(this).serializeArray();
@@ -23,6 +23,7 @@ $('#form').submit(function(event) {
     let redirect = $(this).data('redirect');
 
     console.log(method, url)
+    console.log(data)
 
     // enviar datos al servidor
     $.ajax({
@@ -40,7 +41,7 @@ $('#form').submit(function(event) {
                 }, 2000);
             } else {
                 // eliminar el loader
-                loader.removeClass('show');
+                loader.removeClass('showToast');
                 // mostrar el boton submit
                 btn.css('display', 'block');
             }
@@ -51,7 +52,7 @@ $('#form').submit(function(event) {
             console.log(err.error);
             showToast('error', err.error);
             // eliminar el loader
-            loader.removeClass('show');
+            loader.removeClass('showToast');
             // mostrar el boton submit
             btn.css('display', 'block');
         },

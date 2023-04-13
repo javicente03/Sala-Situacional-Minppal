@@ -21,6 +21,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->addGroup('/admin', function (RouteCollector $r) {
         $r->addRoute('GET', '/users', 'Admin_Users_Get');
+        $r->addRoute('GET', '/users/create', 'Admin_Users_Create');
+        $r->addRoute('POST', '/users/create', 'Admin_Users_Post');
+        $r->addRoute('GET', '/users/edit/{id}', 'Admin_Users_Edit');
+        $r->addRoute('POST', '/users/edit', 'Admin_Users_Put');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

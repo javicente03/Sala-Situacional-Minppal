@@ -1,5 +1,6 @@
 <!-- JS Scripts -->
 
+</div>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/jQuery/jquery-3.5.1.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/jquery.mousewheel.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/perfect-scrollbar.min.js'; ?>"></script>
@@ -13,6 +14,8 @@
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs-init/libs-init.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/Bootstrap/dist/js/bootstrap.bundle.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/svg-loader.js'; ?>"></script>
+<script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/form.js'; ?>"></script>
+<script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/js/functions/toast.js'; ?>"></script>
 
 </body>
 </html>

@@ -54,6 +54,10 @@ function LoginPost() {
             throw new Exception('El usuario no existe');
         }
 
+        if ($user['active_user'] == 0) {
+            throw new Exception('El usuario no esta activo');
+        }
+
         // Verificamos la contraseña
         if (!password_verify($password, $user['password_user'])) {
             throw new Exception('La contraseña es incorrecta');

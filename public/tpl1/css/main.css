@@ -1032,8 +1032,8 @@ if the page has a “right panel”, add a class for BODY -- ".page-has-right-pa
   margin: 0;
   text-align: center;
   box-sizing: border-box;
-  -webkit-animation: slide 50s linear infinite;
-          animation: slide 50s linear infinite;
+  -webkit-animation: slide 200s linear infinite;
+          animation: slide 200s linear infinite;
   will-change: background-position;
   background-size: auto; }
   .content-bg-wrap:before {
@@ -1921,7 +1921,8 @@ section {
   background-color: rgba(98, 54, 178, 0.95); }
 
 .stunning-header-bg1 {
-  background-image: url("../img/landing-users.webp"); }
+  background-image: url("../../images/falcon_effect.png"); 
+}
 
 .breadcrumbs-item {
   display: inline-block;

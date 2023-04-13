@@ -18,8 +18,10 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/Bootstrap/dist/css/bootstrap.css'; ?>">
 
 	<!-- Main Styles CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/css/main.min.css'; ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/css/main.css'; ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/stylesMP.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/css/loader.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/css/toast.css'; ?>">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- Main RTL CSS -->
@@ -27,4 +29,6 @@
 
 
 </head>
-<body class="page-has-left-panels page-has-right-panels">
+<body class="page-has-left-panels page-has-right-panels" style="padding: 0px;">
+<div class="MainLayout">
+<?php include 'toast/toast.php'; ?>
