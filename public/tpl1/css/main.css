@@ -1924,6 +1924,10 @@ section {
   background-image: url("../../images/falcon_effect.png"); 
 }
 
+.stunning-header-cnae {
+  background-image: url("../../images/CNAE.png"); 
+}
+
 .breadcrumbs-item {
   display: inline-block;
   margin-bottom: 0; }

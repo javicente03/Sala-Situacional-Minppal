@@ -579,3 +579,114 @@ function Create_First_Companies () {
         header('Location: /admin/companies');
     }
 }
+
+// Crear Municipios de Falcón
+function Create_Municipios () {
+    try {
+        if (!isset($_SESSION['user']) || $_SESSION['role'] != 'admin') {
+            throw new Exception('No tiene permisos para crear los municipios');
+        }
+        require 'src/database/connection.php';
+
+        // Si ya hay municipios creados, no se crean
+        $sql = "SELECT * FROM municipios";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $municipios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($municipios) > 0) {
+            throw new Exception('Ya hay municipios creados');
+        }
+
+        // Crear municipios
+        $municipios = array(
+            array(
+                'name_municipio' => 'Acosta',
+            ),
+            array(
+                'name_municipio' => 'Bolívar',
+            ),
+            array(
+                'name_municipio' => 'Buchivacoa',
+            ),
+            array(
+                'name_municipio' => 'Cacique Manaure',
+            ),
+            array(
+                'name_municipio' => 'Carirubana',
+            ),
+            array(
+                'name_municipio' => 'Colina',
+            ),
+            array(
+                'name_municipio' => 'Dabajuro',
+            ),
+            array(
+                'name_municipio' => 'Democracia',
+            ),
+            array(
+                'name_municipio' => 'Falcón',
+            ),
+            array(
+                'name_municipio' => 'Federación',
+            ),
+            array(
+                'name_municipio' => 'Jacura',
+            ),
+            array(
+                'name_municipio' => 'Los Taques',
+            ),
+            array(
+                'name_municipio' => 'Mauroa',
+            ),
+            array(
+                'name_municipio' => 'Miranda',
+            ),
+            array(
+                'name_municipio' => 'Monseñor Iturriza',
+            ),
+            array(
+                'name_municipio' => 'Palmasola',
+            ),
+            array(
+                'name_municipio' => 'Petit',
+            ),
+            array(
+                'name_municipio' => 'Píritu',
+            ),
+            array(
+                'name_municipio' => 'San Francisco',
+            ),
+            array(
+                'name_municipio' => 'Silva',
+            ),
+            array(
+                'name_municipio' => 'Sucre',
+            ),
+            array(
+                'name_municipio' => 'Tocópero',
+            ),
+            array(
+                'name_municipio' => 'Unión',
+            ),
+            array(
+                'name_municipio' => 'Urumaco',
+            ),
+            array(
+                'name_municipio' => 'Zamora',
+            ),
+        );
+
+        foreach ($municipios as $municipio) {
+            $sql = "INSERT INTO municipios (name_municipio) VALUES (:name_municipio)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($municipio);
+        }
+
+        header('Location: /admin/companies');
+
+    } catch (\Throwable $th) {    
+        header('Location: /admin/companies');
+    }
+
+}

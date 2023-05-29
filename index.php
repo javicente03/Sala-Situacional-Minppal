@@ -6,6 +6,7 @@ use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
 require_once 'src/controllers/auth.controllers.php';
 require_once 'src/controllers/admin.controllers.php';
+require_once 'src/controllers/companys/cnae.controllers.php';
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -32,6 +33,13 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/companies', 'Admin_Companies_Get');
         $r->addRoute('GET', '/companies/edit/{id}', 'Admin_Company_Edit');
         $r->addRoute('POST', '/companies/edit', 'Admin_Companies_Put');
+
+        // Municipios
+        $r->addRoute('GET', '/municipalities/create-list', 'Create_Municipios');
+
+        // CNAE
+        $r->addRoute('GET', '/cnae', 'CNAE_Viewer');
+        $r->addRoute('GET', '/cnae/{id}', 'Get_Cnae_Por_Mes');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

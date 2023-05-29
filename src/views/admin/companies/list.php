@@ -50,7 +50,7 @@
                                     setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp');
                                     foreach ($companies as $company) { 
                                     ?>
-                                    <tr class="event-item" key={index}>
+                                    <tr class="event-item">
                                         <td class="upcoming">
                                             #<?php echo $company['id_company'] ?>
                                         </td>

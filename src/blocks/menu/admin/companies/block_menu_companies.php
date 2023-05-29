@@ -20,6 +20,9 @@
                                 <li>
                                     <a href="/admin/companies">Listado</a>
                                 </li>
+                                <li>
+                                    <a href="/admin/cnae">CNAE</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
