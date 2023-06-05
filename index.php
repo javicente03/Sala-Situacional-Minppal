@@ -40,6 +40,11 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         // CNAE
         $r->addRoute('GET', '/cnae', 'CNAE_Viewer');
         $r->addRoute('GET', '/cnae/{id}', 'Get_Cnae_Por_Mes');
+        $r->addRoute('GET', '/cnae/assigned/{id}', 'Update_CNAE_Assigned');
+        $r->addRoute('POST', '/cnae/assigned', 'PUT_CNAE_Assigned');
+        $r->addRoute('GET', '/cnae/load/{id}', 'Load_Data_CNAE');
+        $r->addRoute('POST', '/cnae/load', 'POST_Data_CNAE');
+        $r->addRoute('GET', '/cnae/month-export/{id}', 'Export_PDF_CNAE_Por_Mes');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

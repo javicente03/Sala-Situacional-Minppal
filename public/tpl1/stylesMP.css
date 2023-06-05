@@ -98,3 +98,11 @@ table {
     justify-content: center;
     display: flex;
 }
+
+.td-actions {
+    text-align: center !important;
+}
+
+.td-actions a {
+    margin-top: 5px;
+}

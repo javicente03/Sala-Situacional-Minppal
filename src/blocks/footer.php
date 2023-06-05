@@ -7,6 +7,8 @@
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/imagesloaded.pkgd.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/material.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/selectize.min.js'; ?>"></script>
+<script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/moment.min.js'; ?>"></script>
+<script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/daterangepicker.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/isotope.pkgd.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/ajax-pagination.min.js'; ?>"></script>
 <script src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl1/js/libs/jquery.magnific-popup.min.js'; ?>"></script>
