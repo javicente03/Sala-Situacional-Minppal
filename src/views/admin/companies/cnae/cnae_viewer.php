@@ -72,8 +72,11 @@
                                             <a href="/admin/cnae/assigned/<?php echo $cnae['id_cnae_por_mes'] ?>" class="btn btn-primary btn-sm" title="Modificar indices" target="_blank">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="/admin/cnae/load/<?php echo $cnae['id_cnae_por_mes'] ?>" class="btn btn-primary btn-sm" title="Modificar indices" target="_blank">
+                                            <a href="/admin/cnae/load/<?php echo $cnae['id_cnae_por_mes'] ?>" class="btn btn-primary btn-sm" title="Subir entrega" target="_blank">
                                                 <i class="fas fa-upload"></i>
+                                            </a>
+                                            <a href="/admin/cnae/month-export/<?php echo $cnae['id_cnae_por_mes'] ?>" class="btn btn-primary btn-sm" title="Exportar Pdf" target="_blank">
+                                                <i class="fa fa-download" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                         <td class="author">

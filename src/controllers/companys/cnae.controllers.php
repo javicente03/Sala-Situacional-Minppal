@@ -697,6 +697,11 @@ function Export_PDF_CNAE_Por_Mes ($id) {
             $porcentaje_fruta_despachada_mun = $cnae['fruta_asignada_cnae_por_municipio'] != 0 ? ($cnae_carga_mun['fruta_despachada_cnae_carga'] * 100) / $cnae['fruta_asignada_cnae_por_municipio'] : 0;
             $porcentaje_instituciones_despachadas_mun = $cnae['instituciones_cnae_por_municipio'] != 0 ? ($cnae_carga_mun['instituciones_despachadas_cnae_carga'] * 100) / $cnae['instituciones_cnae_por_municipio'] : 0;
             $porcentaje_matricula_despachada_mun = $cnae['matricula_cnae_por_municipio'] != 0 ? ($cnae_carga_mun['matricula_despachada_cnae_carga'] * 100) / $cnae['matricula_cnae_por_municipio'] : 0;
+            $diff_proteina = $cnae['proteina_asignada_cnae_por_municipio'] - $cnae_carga_mun['proteina_despachada_cnae_carga'];
+            $diff_clap = $cnae['clap_asignados_cnae_por_municipio'] - $cnae_carga_mun['clap_despachados_cnae_carga'];
+            $diff_fruta = $cnae['fruta_asignada_cnae_por_municipio'] - $cnae_carga_mun['fruta_despachada_cnae_carga'];
+            $diff_instituciones = $cnae['instituciones_cnae_por_municipio'] - $cnae_carga_mun['instituciones_despachadas_cnae_carga'];
+            $diff_matricula = $cnae['matricula_cnae_por_municipio'] - $cnae_carga_mun['matricula_despachada_cnae_carga'];
 
             $data_return[] = array(
                 'id_cnae_por_municipio' => $cnae['id_cnae_por_municipio'],
@@ -717,14 +722,54 @@ function Export_PDF_CNAE_Por_Mes ($id) {
                 'porcentaje_fruta_despachada' => number_format($porcentaje_fruta_despachada_mun, 2, ',', '.'),
                 'porcentaje_instituciones_despachadas' => number_format($porcentaje_instituciones_despachadas_mun, 2, ',', '.'),
                 'porcentaje_matricula_despachada' => number_format($porcentaje_matricula_despachada_mun, 2, ',', '.'),
+                'diff_proteina' => $diff_proteina,
+                'diff_clap' => $diff_clap,
+                'diff_fruta' => $diff_fruta,
+                'diff_instituciones' => $diff_instituciones,
+                'diff_matricula' => $diff_matricula,
             );
         }
 
         // incluir la librería de TCPDF
         require_once 'vendor/tecnickcom/tcpdf/tcpdf.php';
 
+        class MYPDF extends TCPDF {
 
-        $pdf = new TCPDF();
+            //Page header
+            public function Header() {
+                // Logo
+                // $image_file = K_PATH_IMAGES.'logo_example.jpg';
+                $now = date('d/m/Y');
+                $image_file = 'C:/xampp/htdocs/minppal_sala/public/images/logo.png';
+                $this->Image($image_file, 10, 10, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                // Set font
+                $this->SetFont('helvetica', 'B', 8);
+                // Title
+                $this->Cell(0, 15, '  Ministerio del Poder Popular para la Alimentación');
+                $this->Cell(0, 15, 'Fecha de creación: ' . $now, 0, false, 'R', 0, '', 0, false, 'T', 'M');
+                // Nuevo titulo con una letra un poco mas grande y que este centrado y que ocupe todo el ancho de la pagina
+                $this->Ln(10);
+                $this->SetFont('helvetica', 'B', 20);
+                // Pintar una línea roja de la longitud completa de la celda
+                $this->Line(10, 26, 210-10, 26, array('width' => 0.1, 'color' => array(255, 0, 0)));
+                // Margin inferior
+                $this->SetMargins(10, 30, 10);
+            }
+        
+            // Page footer
+            public function Footer() {
+                // Position at 15 mm from bottom
+                $this->SetY(-15);
+                // Set font
+                $this->SetFont('helvetica', 'I', 8);
+                // Page number
+                // Colocar el numero de pagina en la esquina inferior derecha
+                $this->Cell(0, 10, 'Página '.$this->getAliasNumPage().' de '.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+            }
+        }
+
+
+        $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // Establecer la configuración básica del documento PDF
         $pdf->SetCreator(PDF_CREATOR);
@@ -734,15 +779,9 @@ function Export_PDF_CNAE_Por_Mes ($id) {
         $pdf->SetKeywords('MINPPAL, PDF, CNAE, Reporte, ' . $month_selected);
 
         // Establecer la configuración de la página
-        // Quiero que tenga un header que diga: donde se coloque la fecha de creación del reporte (25/05/2020) en una esquina
-        // Agregar un logo al header
-        $now = date('d/m/Y');
-        // $pdf->SetHeaderData('', 0, 'Fecha de creación: ' . $now);
-        $url_img = 'C:/xampp/htdocs/minppal_sala/public/images/logo.png';
-        $pdf->SetHeaderData('C:/xampp/htdocs/minppal_sala/public/images/logo.png', 20, 'Fecha de creación: ' . $now);
         $pdf->setHeaderFont(Array('helvetica', '', 6));
-        $pdf->SetHeaderMargin(2);
-        $pdf->setPrintFooter(false);
+        $pdf->SetHeaderMargin(10);
+        $pdf->setPrintFooter(true);
 
         // Agregar una página
         $pdf->AddPage();
@@ -759,21 +798,21 @@ function Export_PDF_CNAE_Por_Mes ($id) {
                     <th class="description">Instituciones Asignadas</th>
                     <th class="description">Matricula Asignada</th>
                     <th class="description">Proteina Asignada</th>
-                    <th class="description">Fruta Asignada</th>
+                    <th class="description">Fruver Asignado</th>
                     <th class="description">Clap Asignados</th>
                 </tr>
                 <tr style="background-color: #dfdfdf; text-align: center; word-break: break-word; font-size: 7px;">
                     <th class="description">Instituciones Atendidas</th>
                     <th class="description">Matricula Atendida</th>
                     <th class="description">Proteina Despachada</th>
-                    <th class="description">Fruta Despachada</th>
+                    <th class="description">Fruver Despachado</th>
                     <th class="description">Clap Despachados</th>
                 </tr>
                 <tr style="background-color: #dfdfdf; text-align: center; word-break: break-word; font-size: 7px;">
                     <th class="description">Porcentaje de Instituciones Atendidas</th>
                     <th class="description">Porcentaje de Matricula Atendida</th>
                     <th class="description">Porcentaje de Proteina Despachada</th>
-                    <th class="description">Porcentaje de Fruta Despachada</th>
+                    <th class="description">Porcentaje de Fruver Despachado</th>
                     <th class="description">Porcentaje de Clap Despachados</th>
                 </tr>
             </thead>
@@ -802,6 +841,45 @@ function Export_PDF_CNAE_Por_Mes ($id) {
             </tbody>
         </table>
         ';
+
+        $html_diff_cnae_carga = '';
+        if ($cnae_por_mes['instituciones_cnae_por_mes'] > $cnae_carga['instituciones_despachadas_cnae_carga']) {
+            $html_diff_cnae_carga .= '
+            <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                Hay un déficit de ' . number_format($cnae_por_mes['instituciones_cnae_por_mes'] - $cnae_carga['instituciones_despachadas_cnae_carga'], 0, ',', '.') . ' instituciones sin atender
+            </h6>
+            ';
+        }
+        if ($cnae_por_mes['matricula_cnae_por_mes'] > $cnae_carga['matricula_despachada_cnae_carga']) {
+            $html_diff_cnae_carga .= '
+            <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                Hay un déficit de ' . number_format($cnae_por_mes['matricula_cnae_por_mes'] - $cnae_carga['matricula_despachada_cnae_carga'], 0, ',', '.') . ' matriculas sin atender
+            </h6>
+            ';
+        }
+        if ($cnae_por_mes['proteina_asignada_cnae_por_mes'] > $cnae_carga['proteina_despachada_cnae_carga']) {
+            $html_diff_cnae_carga .= '
+            <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                Hay un déficit de ' . number_format($cnae_por_mes['proteina_asignada_cnae_por_mes'] - $cnae_carga['proteina_despachada_cnae_carga'], 2, ',', '.') . ' TON de proteina sin despachar
+            </h6>
+            ';
+        }
+        if ($cnae_por_mes['fruta_asignada_cnae_por_mes'] > $cnae_carga['fruta_despachada_cnae_carga']) {
+            $html_diff_cnae_carga .= '
+            <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                Hay un déficit de ' . number_format($cnae_por_mes['fruta_asignada_cnae_por_mes'] - $cnae_carga['fruta_despachada_cnae_carga'], 2, ',', '.') . ' TON de fruta sin despachar
+            </h6>
+            ';
+        }
+        if ($cnae_por_mes['clap_asignados_cnae_por_mes'] > $cnae_carga['clap_despachados_cnae_carga']) {
+            $html_diff_cnae_carga .= '
+            <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                Hay un déficit de ' . number_format($cnae_por_mes['clap_asignados_cnae_por_mes'] - $cnae_carga['clap_despachados_cnae_carga'], 0, ',', '.') . ' CLAP sin despachar
+            </h6>
+            ';
+        }
+
+        $html .= $html_diff_cnae_carga;
 
         // output the HTML content
         $pdf->writeHTML($html, true, false, true, false, '');
@@ -841,18 +919,18 @@ function Export_PDF_CNAE_Por_Mes ($id) {
                 </thead>
                 <tbody>
                     <tr style="text-align: center; word-break: break-word; font-size: 7px;">
-                        <td>' . number_format($municipio['instituciones_cnae_por_municipio'], 0, ',' ,'.') . '</td>
-                        <td>' . number_format($municipio['matricula_cnae_por_municipio'], 0, ',', '.') . '</td>
+                        <td>' . $municipio['instituciones_cnae_por_municipio'] . '</td>
+                        <td>' . $municipio['matricula_cnae_por_municipio']. '</td>
                         <td>' . $municipio['proteina_asignada_cnae_por_municipio'] . ' TON</td>
                         <td>' . $municipio['fruta_asignada_cnae_por_municipio'] . ' TON</td>
-                        <td>' . number_format($municipio['clap_asignados_cnae_por_municipio'], 0, ',', '.') . '</td>
+                        <td>' . $municipio['clap_asignados_cnae_por_municipio'] . '</td>
                     </tr>
                     <tr style="text-align: center; word-break: break-word; font-size: 7px;">
-                        <td>' . number_format($municipio['instituciones_despachadas_cnae_carga'], 0, ',', '.') . '</td>
-                        <td>' . number_format($municipio['matricula_despachada_cnae_carga'], 0, ',', '.') . '</td>
+                        <td>' . $municipio['instituciones_despachadas_cnae_carga'] . '</td>
+                        <td>' . $municipio['matricula_despachada_cnae_carga'] . '</td>
                         <td>' . $municipio['proteina_despachada_cnae_carga'] . ' TON</td>
                         <td>' . $municipio['fruta_despachada_cnae_carga'] . ' TON</td>
-                        <td>' . number_format($municipio['clap_despachados_cnae_carga'], 0, ',', '.') . '</td>
+                        <td>' . $municipio['clap_despachados_cnae_carga'] . '</td>
                     </tr>
                     <tr style="text-align: center; word-break: break-word; font-size: 7px;">
                         <td>' . $municipio['porcentaje_instituciones_despachadas'] . '%</td>
@@ -863,8 +941,42 @@ function Export_PDF_CNAE_Por_Mes ($id) {
                     </tr>
                 </tbody>
             </table>
-            
             ';
+            if ($municipio['diff_proteina'] > 0) {
+                $html_tablas_por_municipio .= '
+                <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                    Hay un déficit de ' . number_format($municipio['diff_proteina'], 2, ',', '.') . ' TON de proteina sin despachar
+                </h6>
+                ';
+            }
+            if ($municipio['diff_clap'] > 0) {
+                $html_tablas_por_municipio .= '
+                <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                    Hay un déficit de ' . number_format($municipio['diff_clap'], 0, ',', '.') . ' CLAP sin despachar
+                </h6>
+                ';
+            }
+            if ($municipio['diff_fruta'] > 0) {
+                $html_tablas_por_municipio .= '
+                <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                    Hay un déficit de ' . number_format($municipio['diff_fruta'], 2, ',', '.') . ' TON de fruta sin despachar
+                </h6>
+                ';
+            }
+            if ($municipio['diff_instituciones'] > 0) {
+                $html_tablas_por_municipio .= '
+                <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                    Hay un déficit de ' . number_format($municipio['diff_instituciones'], 0, ',', '.') . ' instituciones sin despachar
+                </h6>
+                ';
+            }
+            if ($municipio['diff_matricula'] > 0) {
+                $html_tablas_por_municipio .= '
+                <h6 style="text-align: left; color: #a20000; font-size: 9px;">
+                    Hay un déficit de ' . number_format($municipio['diff_matricula'], 0, ',', '.') . ' matricula sin despachar
+                </h6>
+                ';
+            }
         }
 
         $pdf->writeHTML($html_tablas_por_municipio, true, false, true, false, '');
