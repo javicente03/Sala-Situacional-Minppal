@@ -21,6 +21,7 @@ $('#form').submit(function(event) {
     let action = $(this).data('action');
     // obtener la url de redireccionamiento desde las data del formulario (opcional)
     let redirect = $(this).data('redirect');
+    let lastId = $(this).data('lastid');
 
     console.log(method, url)
     console.log(data)
@@ -37,7 +38,11 @@ $('#form').submit(function(event) {
             if (action == 'redirect') {
                 setTimeout(function() {
                     // redireccionar a la url especificada
-                    window.location.href = redirect;
+                    if (lastId === 1) {
+                        window.location.href = redirect + res.redirectId;
+                    } else {
+                        window.location.href = redirect;
+                    }
                 }, 2000);
             } else {
                 // eliminar el loader

@@ -7,6 +7,7 @@ use FastRoute\Dispatcher;
 require_once 'src/controllers/auth.controllers.php';
 require_once 'src/controllers/admin.controllers.php';
 require_once 'src/controllers/companys/cnae.controllers.php';
+require_once 'src/controllers/companys/clap.controllers.php';
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -45,6 +46,16 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/cnae/load/{id}', 'Load_Data_CNAE');
         $r->addRoute('POST', '/cnae/load', 'POST_Data_CNAE');
         $r->addRoute('GET', '/cnae/month-export/{id}', 'Export_PDF_CNAE_Por_Mes');
+
+        // CLAP
+        $r->addRoute('GET', '/clap', 'Clap_Viewer');
+        $r->addRoute('GET', '/clap/create', 'Create_Entrega');
+        $r->addRoute('POST', '/clap/create', 'POST_Entrega');
+        $r->addRoute('GET', '/clap/custom/{id}', 'Clap_Custom');
+        $r->addRoute('POST', '/clap/custom', 'POST_Clap_Custom');
+        $r->addRoute('GET', '/clap/load/{id}', 'Clap_Load');
+        $r->addRoute('POST', '/clap/load', 'Post_Load_Clap');
+        $r->addRoute('GET', '/clap/export/{id}', 'Export_Pdf_Clap_Por_Entrega');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

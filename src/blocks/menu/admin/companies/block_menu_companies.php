@@ -23,6 +23,9 @@
                                 <li>
                                     <a href="/admin/cnae">CNAE</a>
                                 </li>
+                                <li>
+                                    <a href="/admin/clap">CLAP</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
