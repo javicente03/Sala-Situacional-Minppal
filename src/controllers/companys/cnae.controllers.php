@@ -169,11 +169,11 @@ function CNAE_Viewer () {
             'fruta_despachada_cnae_carga' => number_format($cnae_carga['fruta_despachada_cnae_carga'], 2, ',', '.'),
             'instituciones_despachadas_cnae_carga' => number_format($cnae_carga['instituciones_despachadas_cnae_carga'], 0, ',', '.'),
             'matricula_despachada_cnae_carga' => number_format($cnae_carga['matricula_despachada_cnae_carga'], 0, ',', '.'),
-            'porcentaje_proteina_despachada' => number_format(($cnae_carga['proteina_despachada_cnae_carga'] / $cnae['proteina_asignada_cnae_por_mes']) * 100, 2, ',', '.'),
-            'porcentaje_clap_despachados' => number_format(($cnae_carga['clap_despachados_cnae_carga'] / $cnae['clap_asignados_cnae_por_mes']) * 100, 2, ',', '.'),
-            'porcentaje_fruta_despachada' => number_format(($cnae_carga['fruta_despachada_cnae_carga'] / $cnae['fruta_asignada_cnae_por_mes']) * 100, 2, ',', '.'),
-            'porcentaje_instituciones_despachadas' => number_format(($cnae_carga['instituciones_despachadas_cnae_carga'] / $cnae['instituciones_cnae_por_mes']) * 100, 2, ',', '.'),
-            'porcentaje_matricula_despachada' => number_format(($cnae_carga['matricula_despachada_cnae_carga'] / $cnae['matricula_cnae_por_mes']) * 100, 2, ',', '.')
+            'porcentaje_proteina_despachada' => $cnae['proteina_asignada_cnae_por_mes'] == 0 ? 0 : number_format(($cnae_carga['proteina_despachada_cnae_carga'] / $cnae['proteina_asignada_cnae_por_mes']) * 100, 2, ',', '.'),
+            'porcentaje_clap_despachados' => $cnae['clap_asignados_cnae_por_mes'] == 0 ? 0 : number_format(($cnae_carga['clap_despachados_cnae_carga'] / $cnae['clap_asignados_cnae_por_mes']) * 100, 2, ',', '.'),
+            'porcentaje_fruta_despachada' => $cnae['fruta_asignada_cnae_por_mes'] == 0 ? 0 : number_format(($cnae_carga['fruta_despachada_cnae_carga'] / $cnae['fruta_asignada_cnae_por_mes']) * 100, 2, ',', '.'),
+            'porcentaje_instituciones_despachadas' => $cnae['instituciones_cnae_por_mes'] == 0 ? 0 : number_format(($cnae_carga['instituciones_despachadas_cnae_carga'] / $cnae['instituciones_cnae_por_mes']) * 100, 2, ',', '.'),
+            'porcentaje_matricula_despachada' => $cnae['matricula_cnae_por_mes'] == 0 ? 0 : number_format(($cnae_carga['matricula_despachada_cnae_carga'] / $cnae['matricula_cnae_por_mes']) * 100, 2, ',', '.')
         );
     }
 
@@ -192,7 +192,7 @@ function CNAE_Viewer () {
     include_once 'src/blocks/menu/admin/menu.php';
     include_once 'src/blocks/menu/admin/menu_responsive.php';
     include_once 'src/blocks/sidebar/admin/sidebarLeft.php';
-    include_once 'src/views/admin/companies/cnae/CNAE_Viewer.php';
+    include_once 'src/views/admin/companies/cnae/cnae_viewer.php';
     include_once 'src/blocks/footer.php';
 }
 

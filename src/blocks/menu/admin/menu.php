@@ -7,14 +7,14 @@
 	</div>
 
 	<div class="header-content-wrapper">
-		<form class="search-bar w-search notification-list friend-requests">
+		<!-- <form class="search-bar w-search notification-list friend-requests">
 			<div class="form-group with-button">
 				<input class="form-control js-user-search" placeholder="Search here people or pages..." type="text">
 				<button>
 					<svg class="olymp-magnifying-glass-icon"><use xlink:href="#olymp-magnifying-glass-icon"></use></svg>
 				</button>
 			</div>
-		</form>
+		</form> -->
 
 		<div class="control-block">
 

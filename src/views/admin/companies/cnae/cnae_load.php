@@ -109,7 +109,7 @@
                             <div class="col col-12">
                                 <div class="row" style="justify-content: center;">
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                                        <button class="btn btn-primary btn-lg full-width" type="submit">Guardar Cambios</button>
+                                        <button class="btn btn-primary btn-lg full-width" type="submit">Guardar</button>
                                         <!-- Hacer una barra de progreso indefinida para esperar la respuesta del servidor -->
                                         <div class="loader"></div>
                                     </div>

@@ -26,6 +26,12 @@
                                 <li>
                                     <a href="/admin/clap">CLAP</a>
                                 </li>
+                                <li>
+                                    <a href="/admin/inn">INN</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/fundaproal">FUNDAPROAL</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

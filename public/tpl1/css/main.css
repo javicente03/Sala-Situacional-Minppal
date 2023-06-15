@@ -1933,6 +1933,11 @@ section {
   background-size: 164px;
 }
 
+.stunning-header-inn {
+  background-image: url("../../images/INN.png"); 
+  background-size: 100px;
+}
+
 .breadcrumbs-item {
   display: inline-block;
   margin-bottom: 0; }

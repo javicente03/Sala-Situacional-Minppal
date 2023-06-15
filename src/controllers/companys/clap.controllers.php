@@ -99,7 +99,7 @@ function Clap_Viewer () {
     include_once 'src/blocks/menu/admin/menu.php';
     include_once 'src/blocks/menu/admin/menu_responsive.php';
     include_once 'src/blocks/sidebar/admin/sidebarLeft.php';
-    include_once 'src/views/admin/companies/clap/CLAP_Viewer.php';
+    include_once 'src/views/admin/companies/clap/clap_viewer.php';
     include_once 'src/blocks/footer.php';
 }
 

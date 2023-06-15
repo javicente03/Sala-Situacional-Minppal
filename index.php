@@ -8,6 +8,7 @@ require_once 'src/controllers/auth.controllers.php';
 require_once 'src/controllers/admin.controllers.php';
 require_once 'src/controllers/companys/cnae.controllers.php';
 require_once 'src/controllers/companys/clap.controllers.php';
+require_once 'src/controllers/companys/inn.controllers.php';
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -56,6 +57,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/clap/load/{id}', 'Clap_Load');
         $r->addRoute('POST', '/clap/load', 'Post_Load_Clap');
         $r->addRoute('GET', '/clap/export/{id}', 'Export_Pdf_Clap_Por_Entrega');
+
+        // INN
+        $r->addRoute('GET', '/inn', 'INN_Viewer');
     });
 
     $r->addRoute('GET', '/generarHash', function() {
