@@ -60,6 +60,12 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
         // INN
         $r->addRoute('GET', '/inn', 'INN_Viewer');
+        $r->addRoute('GET', '/inn/{id}', 'Get_INN_Por_Mes');
+        $r->addRoute('GET', '/inn/assigned/{id}', 'Update_INN_Assigned');
+        $r->addRoute('POST', '/inn/assigned', 'PUT_INN_Assigned');
+        $r->addRoute('GET', '/inn/load/{id}', 'Load_Data_INN');
+        $r->addRoute('POST', '/inn/load', 'POST_Data_INN');
+        $r->addRoute('GET', '/inn/month-export/{id}', 'Export_PDF_INN_Por_Mes');
     });
 
     $r->addRoute('GET', '/generarHash', function() {
