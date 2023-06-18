@@ -9,6 +9,7 @@ require_once 'src/controllers/admin.controllers.php';
 require_once 'src/controllers/companys/cnae.controllers.php';
 require_once 'src/controllers/companys/clap.controllers.php';
 require_once 'src/controllers/companys/inn.controllers.php';
+require_once 'src/controllers/companys/fundaproal.controllers.php';
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -66,6 +67,15 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/inn/load/{id}', 'Load_Data_INN');
         $r->addRoute('POST', '/inn/load', 'POST_Data_INN');
         $r->addRoute('GET', '/inn/month-export/{id}', 'Export_PDF_INN_Por_Mes');
+
+        // FUNDAPROAL
+        $r->addRoute('GET', '/fundaproal', 'FUNDAPROAL_Viewer');
+        $r->addRoute('GET', '/fundaproal/{id}', 'Get_FUNDAPROAL_Por_Mes');
+        $r->addRoute('GET', '/fundaproal/assigned/{id}', 'Update_FUNDAPROAL_Assigned');
+        $r->addRoute('POST', '/fundaproal/assigned', 'PUT_FUNDAPROAL_Assigned');
+        $r->addRoute('GET', '/fundaproal/load/{id}', 'Load_Data_FUNDAPROAL');
+        $r->addRoute('POST', '/fundaproal/load', 'POST_Data_FUNDAPROAL');
+        $r->addRoute('GET', '/fundaproal/month-export/{id}', 'Export_PDF_FUNDAPROAL_Por_Mes');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

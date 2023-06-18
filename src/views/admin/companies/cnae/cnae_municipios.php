@@ -25,7 +25,7 @@
 
                 <div class="col col-xl-12 order-xl-2 col-lg-12 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
                     <div class="ui-block ui-block-title ui-block-title-small containerFilters">
-                        <h6 class="title" >Data de la Corporación Nacional de Alimentación Escolar</h6>
+                        <h6 class="title" >Data de la Corporación Nacional de Alimentación Escolar <?php echo $month_year ?></h6>
                     </div>
                 </div>
 

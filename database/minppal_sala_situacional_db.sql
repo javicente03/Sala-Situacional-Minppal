@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2023 a las 07:27:00
+-- Tiempo de generación: 18-06-2023 a las 05:07:54
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -212,7 +212,8 @@ CREATE TABLE `cnae_por_mes` (
 
 INSERT INTO `cnae_por_mes` (`id_cnae_por_mes`, `fecha_inicio_cnae_por_mes`, `fecha_fin_cnae_por_mes`) VALUES
 (15, '2023-05-01', '2023-05-31'),
-(26, '2023-06-01', '2023-06-30');
+(26, '2023-06-01', '2023-06-30'),
+(29, '2023-07-01', '2023-07-31');
 
 -- --------------------------------------------------------
 
@@ -261,11 +262,11 @@ INSERT INTO `cnae_por_municipio` (`id_cnae_por_municipio`, `municipio_id_cnae_po
 (173, 24, 15, '0.00', 0, '0.00', 0, 0),
 (174, 25, 15, '1000.00', 1400, '0.00', 0, 0),
 (175, 26, 15, '70.13', 1022, '0.28', 10000, 200),
-(226, 2, 26, '0.00', 20, '0.00', 2, 0),
-(227, 3, 26, '0.00', 10, '100.00', 0, 0),
+(226, 2, 26, '0.00', 0, '0.00', 2, 0),
+(227, 3, 26, '0.00', 0, '100.00', 0, 0),
 (228, 4, 26, '0.00', 0, '0.00', 0, 0),
 (229, 5, 26, '0.00', 0, '0.00', 0, 0),
-(230, 6, 26, '28.00', 10, '120.23', 1020, 201),
+(230, 6, 26, '28.00', 0, '120.23', 1020, 201),
 (231, 7, 26, '40.20', 0, '0.00', 0, 420),
 (232, 8, 26, '0.00', 0, '0.00', 0, 10000),
 (233, 9, 26, '0.00', 0, '0.00', 0, 0),
@@ -285,7 +286,32 @@ INSERT INTO `cnae_por_municipio` (`id_cnae_por_municipio`, `municipio_id_cnae_po
 (247, 23, 26, '0.00', 0, '0.00', 0, 0),
 (248, 24, 26, '0.00', 0, '0.00', 0, 0),
 (249, 25, 26, '0.00', 0, '0.00', 0, 0),
-(250, 26, 26, '40.32', 200, '0.00', 0, 10000);
+(250, 26, 26, '40.32', 0, '0.00', 0, 10000),
+(301, 2, 29, '0.00', 0, '0.00', 2, 0),
+(302, 3, 29, '0.00', 0, '100.00', 0, 0),
+(303, 4, 29, '0.00', 0, '0.00', 0, 0),
+(304, 5, 29, '0.00', 0, '0.00', 0, 0),
+(305, 6, 29, '28.00', 0, '120.23', 1020, 201),
+(306, 7, 29, '40.20', 0, '0.00', 0, 420),
+(307, 8, 29, '0.00', 0, '0.00', 0, 10000),
+(308, 9, 29, '0.00', 0, '0.00', 0, 0),
+(309, 10, 29, '0.00', 0, '0.00', 0, 0),
+(310, 11, 29, '0.00', 0, '0.00', 0, 0),
+(311, 12, 29, '0.00', 0, '0.00', 0, 0),
+(312, 13, 29, '0.00', 0, '0.00', 0, 0),
+(313, 14, 29, '0.00', 0, '0.00', 0, 0),
+(314, 15, 29, '0.00', 0, '0.00', 0, 0),
+(315, 16, 29, '0.00', 0, '0.00', 0, 0),
+(316, 17, 29, '0.00', 0, '0.00', 0, 0),
+(317, 18, 29, '0.00', 0, '0.00', 0, 0),
+(318, 19, 29, '0.00', 0, '0.00', 0, 0),
+(319, 20, 29, '0.00', 0, '0.00', 0, 0),
+(320, 21, 29, '0.00', 0, '0.00', 0, 0),
+(321, 22, 29, '0.00', 0, '0.00', 0, 0),
+(322, 23, 29, '0.00', 0, '0.00', 0, 0),
+(323, 24, 29, '0.00', 0, '0.00', 0, 0),
+(324, 25, 29, '0.00', 0, '0.00', 0, 0),
+(325, 26, 29, '40.32', 0, '0.00', 0, 10000);
 
 -- --------------------------------------------------------
 
@@ -330,8 +356,25 @@ CREATE TABLE `fundaproal_carga` (
   `plan_paca_despachado` int(11) NOT NULL,
   `plan_papa_despachado` int(11) NOT NULL,
   `fecha_despacho` date DEFAULT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `fundaproal_carga`
+--
+
+INSERT INTO `fundaproal_carga` (`id_fundaproal_carga`, `fundaproal_por_municipio_id`, `proteina_despachada`, `clap_despachados`, `fruta_despachada`, `plan_paca_despachado`, `plan_papa_despachado`, `fecha_despacho`, `created_at`, `user_id`) VALUES
+(1, 76, '0.00', 79, '0.00', 0, 0, NULL, '2023-06-17', 1),
+(2, 76, '0.00', 1, '0.00', 0, 0, NULL, '2023-06-17', 1),
+(3, 76, '6.00', 0, '7.00', 90, 80, NULL, '2023-06-17', 1),
+(4, 76, '6.00', 0, '7.00', 10, 10, NULL, '2023-06-17', 1),
+(5, 76, '6.00', 0, '7.00', 0, 0, NULL, '2023-06-17', 1),
+(6, 100, '0.00', 0, '0.00', 10, 0, NULL, '2023-06-17', 1),
+(7, 100, '1.00', 0, '0.00', 0, 0, NULL, '2023-06-17', 1),
+(8, 100, '1.00', 0, '0.00', 0, 0, '2023-06-18', '2023-06-17', 1),
+(9, 100, '1.00', 0, '0.00', 0, 0, '2023-05-28', '2023-06-17', 1),
+(10, 100, '0.00', 0, '1.00', 0, 0, '2023-05-02', '2023-06-17', 1);
 
 -- --------------------------------------------------------
 
@@ -342,8 +385,17 @@ CREATE TABLE `fundaproal_carga` (
 CREATE TABLE `fundaproal_por_mes` (
   `id_fundaproal_por_mes` int(11) NOT NULL,
   `fecha_inicio_fundaproal_por_mes` date NOT NULL,
-  `fecha_fin_ fundaproal _por_mes` date NOT NULL
+  `fecha_fin_fundaproal_por_mes` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `fundaproal_por_mes`
+--
+
+INSERT INTO `fundaproal_por_mes` (`id_fundaproal_por_mes`, `fecha_inicio_fundaproal_por_mes`, `fecha_fin_fundaproal_por_mes`) VALUES
+(4, '2023-06-01', '2023-06-30'),
+(5, '2023-07-01', '2023-07-31'),
+(6, '2023-08-01', '2023-08-31');
 
 -- --------------------------------------------------------
 
@@ -367,6 +419,87 @@ CREATE TABLE `fundaproal_por_municipio` (
   `plan_papa_asignado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `fundaproal_por_municipio`
+--
+
+INSERT INTO `fundaproal_por_municipio` (`id_fundaproal_por_municipio`, `mes_id`, `municipio_id`, `cantidad_casas_alimentacion`, `cemr`, `cantidad_misioneros`, `cantidad_madres_elab`, `cantidad_padres_elab`, `proteina_asignada`, `clap_asignados`, `fruta_asignada`, `plan_paca_asignado`, `plan_papa_asignado`) VALUES
+(76, 4, 2, 10, 20, 30, 40, 50, '60.00', 80, '70.00', 100, 90),
+(77, 4, 3, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(78, 4, 4, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(79, 4, 5, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(80, 4, 6, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(81, 4, 7, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(82, 4, 8, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(83, 4, 9, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(84, 4, 10, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(85, 4, 11, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(86, 4, 12, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(87, 4, 13, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(88, 4, 14, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(89, 4, 15, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(90, 4, 16, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(91, 4, 17, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(92, 4, 18, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(93, 4, 19, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(94, 4, 20, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(95, 4, 21, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(96, 4, 22, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(97, 4, 23, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(98, 4, 24, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(99, 4, 25, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(100, 4, 26, 100, 90, 80, 70, 60, '50.00', 30, '40.00', 10, 20),
+(101, 5, 2, 100, 20, 30, 40, 50, '60.00', 80, '70.00', 100, 90),
+(102, 5, 3, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(103, 5, 4, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(104, 5, 5, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(105, 5, 6, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(106, 5, 7, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(107, 5, 8, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(108, 5, 9, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(109, 5, 10, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(110, 5, 11, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(111, 5, 12, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(112, 5, 13, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(113, 5, 14, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(114, 5, 15, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(115, 5, 16, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(116, 5, 17, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(117, 5, 18, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(118, 5, 19, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(119, 5, 20, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(120, 5, 21, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(121, 5, 22, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(122, 5, 23, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(123, 5, 24, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(124, 5, 25, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(125, 5, 26, 100, 90, 80, 70, 60, '50.00', 30, '40.00', 10, 20),
+(126, 6, 2, 100, 20, 30, 40, 50, '60.00', 80, '70.00', 100, 90),
+(127, 6, 3, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(128, 6, 4, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(129, 6, 5, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(130, 6, 6, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(131, 6, 7, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(132, 6, 8, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(133, 6, 9, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(134, 6, 10, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(135, 6, 11, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(136, 6, 12, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(137, 6, 13, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(138, 6, 14, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(139, 6, 15, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(140, 6, 16, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(141, 6, 17, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(142, 6, 18, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(143, 6, 19, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(144, 6, 20, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(145, 6, 21, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(146, 6, 22, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(147, 6, 23, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(148, 6, 24, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(149, 6, 25, 0, 0, 0, 0, 0, '0.00', 0, '0.00', 0, 0),
+(150, 6, 26, 100, 90, 80, 70, 60, '50.00', 30, '40.00', 10, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -383,6 +516,23 @@ CREATE TABLE `inn_carga` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `inn_carga`
+--
+
+INSERT INTO `inn_carga` (`id_inn_carga`, `inn_por_municipio_id`, `proteina_despachada`, `clap_despachados`, `personas_atendidas`, `created_at`, `user_id`) VALUES
+(1, 52, '1.00', 0, 0, '2023-06-17', 1),
+(2, 52, '1.00', 0, 0, '2023-06-17', 1),
+(3, 52, '198.00', 0, 0, '2023-06-17', 1),
+(4, 51, '0.00', 0, 99, '2023-06-17', 1),
+(5, 51, '0.00', 0, 1, '2023-06-17', 1),
+(6, 53, '0.00', 200, 0, '2023-06-17', 1),
+(7, 53, '0.00', 100, 0, '2023-06-17', 1),
+(8, 54, '0.00', 100, 0, '2023-06-17', 1),
+(9, 54, '8.00', 0, 0, '2023-06-17', 1),
+(10, 54, '0.00', 0, 14, '2023-06-17', 1),
+(11, 54, '0.00', 0, 1, '2023-06-17', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -394,6 +544,15 @@ CREATE TABLE `inn_por_mes` (
   `fecha_inicio_inn_por_mes` date NOT NULL,
   `fecha_fin_inn_por_mes` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inn_por_mes`
+--
+
+INSERT INTO `inn_por_mes` (`id_inn_por_mes`, `fecha_inicio_inn_por_mes`, `fecha_fin_inn_por_mes`) VALUES
+(3, '2023-06-01', '2023-06-30'),
+(4, '2023-07-01', '2023-07-31'),
+(5, '2023-08-01', '2023-08-31');
 
 -- --------------------------------------------------------
 
@@ -409,6 +568,87 @@ CREATE TABLE `inn_por_municipio` (
   `proteina_asignada` decimal(20,2) NOT NULL,
   `personas_por_atender` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inn_por_municipio`
+--
+
+INSERT INTO `inn_por_municipio` (`id_inn_por_municipio`, `mes_id`, `municipio_id`, `clap_asignados`, `proteina_asignada`, `personas_por_atender`) VALUES
+(51, 3, 2, 0, '0.00', 100),
+(52, 3, 3, 0, '200.00', 0),
+(53, 3, 4, 300, '0.00', 0),
+(54, 3, 5, 100, '20.00', 30),
+(55, 3, 6, 0, '0.00', 0),
+(56, 3, 7, 0, '0.00', 0),
+(57, 3, 8, 0, '0.00', 0),
+(58, 3, 9, 0, '0.00', 0),
+(59, 3, 10, 0, '0.00', 0),
+(60, 3, 11, 0, '0.00', 0),
+(61, 3, 12, 0, '0.00', 0),
+(62, 3, 13, 0, '0.00', 0),
+(63, 3, 14, 0, '0.00', 0),
+(64, 3, 15, 0, '0.00', 0),
+(65, 3, 16, 0, '0.00', 0),
+(66, 3, 17, 0, '0.00', 0),
+(67, 3, 18, 0, '0.00', 0),
+(68, 3, 19, 0, '0.00', 0),
+(69, 3, 20, 0, '0.00', 0),
+(70, 3, 21, 0, '0.00', 0),
+(71, 3, 22, 0, '0.00', 0),
+(72, 3, 23, 0, '0.00', 0),
+(73, 3, 24, 0, '0.00', 0),
+(74, 3, 25, 0, '0.00', 0),
+(75, 3, 26, 0, '0.00', 0),
+(76, 4, 2, 0, '0.00', 500),
+(77, 4, 3, 0, '200.00', 0),
+(78, 4, 4, 300, '0.00', 0),
+(79, 4, 5, 100, '20.00', 30),
+(80, 4, 6, 0, '0.00', 0),
+(81, 4, 7, 0, '0.00', 0),
+(82, 4, 8, 0, '0.00', 0),
+(83, 4, 9, 0, '0.00', 0),
+(84, 4, 10, 0, '0.00', 0),
+(85, 4, 11, 0, '0.00', 0),
+(86, 4, 12, 0, '0.00', 0),
+(87, 4, 13, 0, '0.00', 0),
+(88, 4, 14, 0, '0.00', 0),
+(89, 4, 15, 0, '0.00', 0),
+(90, 4, 16, 0, '0.00', 0),
+(91, 4, 17, 0, '0.00', 0),
+(92, 4, 18, 0, '0.00', 0),
+(93, 4, 19, 0, '0.00', 0),
+(94, 4, 20, 0, '0.00', 0),
+(95, 4, 21, 0, '0.00', 0),
+(96, 4, 22, 0, '0.00', 0),
+(97, 4, 23, 0, '0.00', 0),
+(98, 4, 24, 0, '0.00', 0),
+(99, 4, 25, 0, '0.00', 0),
+(100, 4, 26, 10, '0.00', 0),
+(101, 5, 2, 0, '0.00', 500),
+(102, 5, 3, 0, '200.00', 0),
+(103, 5, 4, 300, '0.00', 0),
+(104, 5, 5, 100, '20.00', 30),
+(105, 5, 6, 0, '0.00', 0),
+(106, 5, 7, 0, '0.00', 0),
+(107, 5, 8, 0, '0.00', 0),
+(108, 5, 9, 0, '0.00', 0),
+(109, 5, 10, 0, '0.00', 0),
+(110, 5, 11, 0, '0.00', 0),
+(111, 5, 12, 0, '0.00', 0),
+(112, 5, 13, 0, '0.00', 0),
+(113, 5, 14, 0, '0.00', 0),
+(114, 5, 15, 0, '0.00', 0),
+(115, 5, 16, 0, '0.00', 0),
+(116, 5, 17, 0, '0.00', 0),
+(117, 5, 18, 0, '0.00', 0),
+(118, 5, 19, 0, '0.00', 0),
+(119, 5, 20, 0, '0.00', 0),
+(120, 5, 21, 0, '0.00', 0),
+(121, 5, 22, 0, '0.00', 0),
+(122, 5, 23, 0, '0.00', 0),
+(123, 5, 24, 0, '0.00', 0),
+(124, 5, 25, 0, '0.00', 0),
+(125, 5, 26, 10, '0.00', 0);
 
 -- --------------------------------------------------------
 
@@ -476,7 +716,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `name_user`, `email_user`, `password_user`, `role_user`, `active_user`, `createdAt_user`, `updatedAt_user`) VALUES
-(1, 'Javier Gerardo 2', 'javicentego@gmail.com', '$2y$10$2w1D/QkaCGL6l60kBD5RduZRou.T.bfbSpnB1.nbh5LfYFA/ngXrm', 'admin', 1, '2023-04-02 18:21:12', '2023-04-02 18:21:12'),
+(1, 'Milimar Cumare', 'javicentego@gmail.com', '$2y$10$2w1D/QkaCGL6l60kBD5RduZRou.T.bfbSpnB1.nbh5LfYFA/ngXrm', 'admin', 1, '2023-04-02 18:21:12', '2023-04-02 18:21:12'),
 (2, 'Milimar Cumare', 'milimarjose@gmail.com', '$2y$10$2w1D/QkaCGL6l60kBD5RduZRou.T.bfbSpnB1.nbh5LfYFA/ngXrm', 'reader', 1, '2023-04-11 12:30:35', '2023-04-11 12:30:35'),
 (3, 'Maria Cumare', 'mariacumare@gmail.com', '$2y$10$2w1D/QkaCGL6l60kBD5RduZRou.T.bfbSpnB1.nbh5LfYFA/ngXrm', 'reader', 1, '2023-04-12 13:56:37', '2023-04-12 13:56:37'),
 (5, 'Javier', 'gabriel@gmail.com', '$2y$10$XoMvdO4Al.pwZakAAptU5eBDrRSNyONDjhQnqk4zH9.kF.my2NgO6', 'admin', 1, '2023-04-12 17:54:58', '2023-04-12 17:54:58'),
@@ -625,13 +865,13 @@ ALTER TABLE `cnae_carga`
 -- AUTO_INCREMENT de la tabla `cnae_por_mes`
 --
 ALTER TABLE `cnae_por_mes`
-  MODIFY `id_cnae_por_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_cnae_por_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `cnae_por_municipio`
 --
 ALTER TABLE `cnae_por_municipio`
-  MODIFY `id_cnae_por_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
+  MODIFY `id_cnae_por_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 
 --
 -- AUTO_INCREMENT de la tabla `companies`
@@ -643,37 +883,37 @@ ALTER TABLE `companies`
 -- AUTO_INCREMENT de la tabla `fundaproal_carga`
 --
 ALTER TABLE `fundaproal_carga`
-  MODIFY `id_fundaproal_carga` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fundaproal_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `fundaproal_por_mes`
 --
 ALTER TABLE `fundaproal_por_mes`
-  MODIFY `id_fundaproal_por_mes` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fundaproal_por_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `fundaproal_por_municipio`
 --
 ALTER TABLE `fundaproal_por_municipio`
-  MODIFY `id_fundaproal_por_municipio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fundaproal_por_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT de la tabla `inn_carga`
 --
 ALTER TABLE `inn_carga`
-  MODIFY `id_inn_carga` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inn_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `inn_por_mes`
 --
 ALTER TABLE `inn_por_mes`
-  MODIFY `id_inn_por_mes` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inn_por_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `inn_por_municipio`
 --
 ALTER TABLE `inn_por_municipio`
-  MODIFY `id_inn_por_municipio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inn_por_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`

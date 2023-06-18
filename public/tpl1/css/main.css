@@ -1938,6 +1938,11 @@ section {
   background-size: 100px;
 }
 
+.stunning-header-fundaproal {
+  background-image: url("../../images/FUNDAPROAL.png"); 
+  background-size: 170px;
+}
+
 .breadcrumbs-item {
   display: inline-block;
   margin-bottom: 0; }
