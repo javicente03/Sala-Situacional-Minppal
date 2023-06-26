@@ -475,6 +475,7 @@ function Export_Pdf_Clap_Por_Entrega ($id) {
 
         $pdf->writeHTML($html_tablas_por_municipio, true, false, true, false, '');
 
+        ob_end_clean();
         $pdf->output('reporte_clap.pdf', 'I');
 
 

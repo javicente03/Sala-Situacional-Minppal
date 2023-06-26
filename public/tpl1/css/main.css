@@ -1943,6 +1943,11 @@ section {
   background-size: 170px;
 }
 
+.stunning-header-mercal {
+  background-image: url("../../images/MERCAL.png"); 
+  background-size: 170px;
+}
+
 .breadcrumbs-item {
   display: inline-block;
   margin-bottom: 0; }

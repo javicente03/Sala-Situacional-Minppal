@@ -10,6 +10,7 @@ require_once 'src/controllers/companys/cnae.controllers.php';
 require_once 'src/controllers/companys/clap.controllers.php';
 require_once 'src/controllers/companys/inn.controllers.php';
 require_once 'src/controllers/companys/fundaproal.controllers.php';
+require_once 'src/controllers/companys/mercal.controllers.php';
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -76,6 +77,17 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/fundaproal/load/{id}', 'Load_Data_FUNDAPROAL');
         $r->addRoute('POST', '/fundaproal/load', 'POST_Data_FUNDAPROAL');
         $r->addRoute('GET', '/fundaproal/month-export/{id}', 'Export_PDF_FUNDAPROAL_Por_Mes');
+
+        // MERCAL
+        $r->addRoute('GET', '/mercal/create-programs', 'CreateProgramasMercal');
+        $r->addRoute('GET', '/mercal', 'Mercal_Viewer');
+        $r->addRoute('GET', '/mercal/in', 'Mercal_Recepcion');
+        $r->addRoute('POST', '/mercal/in', 'Post_Recepcion');
+        $r->addRoute('GET', '/mercal/out', 'Mercal_Despacho');
+        $r->addRoute('POST', '/mercal/out', 'Post_Despacho');
+        $r->addRoute('GET', '/mercal/program/{id}', 'Movimientos_Programa');
+        $r->addRoute('GET', '/mercal/export-pdf', 'Export_Pdf_Mercal_Programas');
+        $r->addRoute('GET', '/mercal/export-pdf/{id}', 'Export_Pdf_Mercal_Por_Programa');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

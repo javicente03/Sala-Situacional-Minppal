@@ -32,6 +32,9 @@
                                 <li>
                                     <a href="/admin/fundaproal">FUNDAPROAL</a>
                                 </li>
+                                <li>
+                                    <a href="/admin/mercal">MERCAL</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -981,6 +981,7 @@ function Export_PDF_CNAE_Por_Mes ($id) {
 
         $pdf->writeHTML($html_tablas_por_municipio, true, false, true, false, '');
 
+        ob_end_clean();
         $pdf->Output('Reporte CNAE - ' . $month_selected . '.pdf', 'I');
 
     } catch (\Throwable $th) {

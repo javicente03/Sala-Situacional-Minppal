@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2023 a las 05:07:54
+-- Tiempo de generación: 26-06-2023 a las 05:00:28
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -653,6 +653,100 @@ INSERT INTO `inn_por_municipio` (`id_inn_por_municipio`, `mes_id`, `municipio_id
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mercal_recepcion_despacho`
+--
+
+CREATE TABLE `mercal_recepcion_despacho` (
+  `id_mercal_recepcion_social` int(11) NOT NULL,
+  `programa_id` int(11) DEFAULT NULL,
+  `cantidad_proteina` decimal(20,2) NOT NULL,
+  `cantidad_bolsas` int(11) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  `fecha` date NOT NULL,
+  `createdAt` date NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mercal_recepcion_despacho`
+--
+
+INSERT INTO `mercal_recepcion_despacho` (`id_mercal_recepcion_social`, `programa_id`, `cantidad_proteina`, `cantidad_bolsas`, `type`, `fecha`, `createdAt`, `user_id`) VALUES
+(6, 4, '30.00', 10, 'recepcion', '2023-06-25', '2023-06-25', 1),
+(7, 9, '10.00', 5, 'recepcion', '2023-06-18', '2023-06-25', 1),
+(8, 9, '20.00', 10, 'recepcion', '2023-06-18', '2023-06-25', 1),
+(9, 4, '10.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(10, 4, '20.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(12, 1, '0.01', 0, 'recepcion', '2023-06-25', '2023-06-25', 1),
+(13, 1, '0.01', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(14, 1, '0.00', 230, 'recepcion', '2023-05-28', '2023-06-25', 1),
+(15, 1, '0.00', 20, 'despacho', '2023-06-25', '2023-06-25', 1),
+(16, 9, '20.00', 0, 'despacho', '2023-04-12', '2023-06-25', 1),
+(17, 9, '0.00', 15, 'despacho', '2023-04-26', '2023-06-25', 1),
+(18, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(19, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(20, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(21, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(22, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(23, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(24, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(25, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(26, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(27, 9, '1.00', 0, 'despacho', '2023-06-25', '2023-06-25', 1),
+(28, 9, '10200.00', 0, 'recepcion', '2023-06-26', '2023-06-25', 1),
+(29, 9, '102.22', 0, 'recepcion', '2023-06-26', '2023-06-25', 1),
+(30, 9, '0.00', 50600, 'recepcion', '2023-06-11', '2023-06-25', 1),
+(31, 9, '0.00', 50, 'recepcion', '2023-06-11', '2023-06-25', 1),
+(32, 9, '400.00', 0, 'despacho', '2023-06-24', '2023-06-25', 1),
+(33, 9, '400.00', 100, 'despacho', '2023-06-25', '2023-06-25', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mercal_stock_programas`
+--
+
+CREATE TABLE `mercal_stock_programas` (
+  `id_mercal_stock_programas` int(11) NOT NULL,
+  `programa` varchar(255) NOT NULL,
+  `stock_proteina` decimal(20,2) NOT NULL,
+  `stock_bolsas` int(11) NOT NULL,
+  `code_clave` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mercal_stock_programas`
+--
+
+INSERT INTO `mercal_stock_programas` (`id_mercal_stock_programas`, `programa`, `stock_proteina`, `stock_bolsas`, `code_clave`) VALUES
+(1, 'BASE DE MISIONES', '0.00', 210, 'base_misiones'),
+(2, 'PLAN DE VULNERABILIDAD', '0.00', 0, 'plan_vulnerabilidad'),
+(3, 'FUNDAPROAL', '0.00', 0, 'fundaproal'),
+(4, 'CNAE', '0.00', 10, 'cnae'),
+(5, 'CORPOELEC', '0.00', 0, 'corpoelec'),
+(6, 'PLAN PNB', '0.00', 0, 'plan_pnb'),
+(7, 'PLAN FANB FAMILAR', '0.00', 0, 'plan_fanb_familiar'),
+(8, 'PLAN TANGO SOLDADO', '0.00', 0, 'plan_tango_soldado'),
+(9, 'FUNDAMUSICAL', '9502.22', 50550, 'fundamusical'),
+(10, 'RECEVA ACTIVA', '0.00', 0, 'receva_activa'),
+(11, 'CDI', '0.00', 0, 'cdi'),
+(12, 'COLABORADORES CUBANOS', '0.00', 0, 'colaboradores_cubanos'),
+(13, 'HOSPITAL IVSS', '0.00', 0, 'hospital_ivss'),
+(14, 'HOSPITAL MPPS', '0.00', 0, 'hospital_mpps'),
+(15, 'HOSPITAL CENTINELA', '0.00', 0, 'hospital_centinela'),
+(16, 'IDENA', '0.00', 0, 'idena'),
+(17, 'INASS', '0.00', 0, 'inass'),
+(18, 'SERN', '0.00', 0, 'sern'),
+(19, 'NEGRA HIPÓLITA', '0.00', 0, 'negra_hipolita'),
+(20, 'DIGE SALUD', '0.00', 0, 'dige_salud'),
+(21, 'MERCADO LABORAL MINPPAL', '0.00', 0, 'mercado_laboral_minppal'),
+(22, 'MERCADO LABORAL INN', '0.00', 0, 'mercado_laboral_inn'),
+(23, 'MERCADO LABORAL CUSPAL', '0.00', 0, 'mercado_laboral_cuspal'),
+(24, 'MERCADO LABORAL MERCAL', '0.00', 0, 'mercado_laboral_mercal');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `municipios`
 --
 
@@ -822,6 +916,20 @@ ALTER TABLE `inn_por_municipio`
   ADD KEY `municipio_id` (`municipio_id`);
 
 --
+-- Indices de la tabla `mercal_recepcion_despacho`
+--
+ALTER TABLE `mercal_recepcion_despacho`
+  ADD PRIMARY KEY (`id_mercal_recepcion_social`),
+  ADD KEY `fk_programa` (`programa_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indices de la tabla `mercal_stock_programas`
+--
+ALTER TABLE `mercal_stock_programas`
+  ADD PRIMARY KEY (`id_mercal_stock_programas`);
+
+--
 -- Indices de la tabla `municipios`
 --
 ALTER TABLE `municipios`
@@ -916,6 +1024,18 @@ ALTER TABLE `inn_por_municipio`
   MODIFY `id_inn_por_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
+-- AUTO_INCREMENT de la tabla `mercal_recepcion_despacho`
+--
+ALTER TABLE `mercal_recepcion_despacho`
+  MODIFY `id_mercal_recepcion_social` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT de la tabla `mercal_stock_programas`
+--
+ALTER TABLE `mercal_stock_programas`
+  MODIFY `id_mercal_stock_programas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
 -- AUTO_INCREMENT de la tabla `municipios`
 --
 ALTER TABLE `municipios`
@@ -986,6 +1106,13 @@ ALTER TABLE `inn_carga`
 ALTER TABLE `inn_por_municipio`
   ADD CONSTRAINT `inn_por_municipio_ibfk_1` FOREIGN KEY (`mes_id`) REFERENCES `inn_por_mes` (`id_inn_por_mes`) ON DELETE SET NULL ON UPDATE NO ACTION,
   ADD CONSTRAINT `inn_por_municipio_ibfk_2` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id_municipio`) ON DELETE SET NULL ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `mercal_recepcion_despacho`
+--
+ALTER TABLE `mercal_recepcion_despacho`
+  ADD CONSTRAINT `mercal_recepcion_despacho_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  ADD CONSTRAINT `mercal_recepcion_despacho_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `mercal_stock_programas` (`id_mercal_stock_programas`) ON DELETE SET NULL ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
