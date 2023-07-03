@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2023 a las 05:00:28
+-- Tiempo de generación: 03-07-2023 a las 04:59:22
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,6 +20,69 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `minppal_sala_situacional_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `base_de_mision`
+--
+
+CREATE TABLE `base_de_mision` (
+  `id_base_de_mision` int(11) NOT NULL,
+  `parroquia_id` int(11) DEFAULT NULL,
+  `name_mision` varchar(255) NOT NULL,
+  `cantidad_familias` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `base_de_mision`
+--
+
+INSERT INTO `base_de_mision` (`id_base_de_mision`, `parroquia_id`, `name_mision`, `cantidad_familias`) VALUES
+(75, 24, 'BSM EL MOREARY', 122),
+(76, 25, 'BSM SIEMBRA DEL GIGANTE', 600),
+(77, 25, 'BSM NUESTRA HEROÍNA JOSEFA CAMEJO', 0),
+(78, 26, 'BSM CARMEN QUEVEDO', 9009),
+(79, 27, 'BSM INDEPEDENCIA', 0),
+(80, 28, 'HUGO CHAVEZ FRIAS', 0),
+(81, 28, 'LOS CAQUETIOS DE LIBERTADORES', 0),
+(82, 29, 'VALENTIN MENDOZA', 0),
+(83, 29, 'ALI PRIMERA', 0),
+(84, 30, 'EL HEROICO COMANDANTE CHAVEZ', 10000),
+(85, 31, 'BSM GIGANTE DE AMERICA', 0),
+(86, 31, 'BSM JEHOVA YIRETH', 0),
+(87, 32, 'BSM LUCHADORES DE LA PATRIA', 0),
+(88, 28, 'GRAN MARISCAL DE AYACUCHO', 0),
+(89, 33, 'MAMA PANCHA', 0),
+(90, 34, 'COMANDANTE ETERNO', 0),
+(91, 35, 'BSM HOY LA PATRIA AVANZA', 0),
+(92, 35, 'BSM INDIO MANAURE', 0),
+(93, 36, 'BMS ERASMO PACHECO', 0),
+(94, 37, 'CHE GUEVARA', 0),
+(95, 27, 'BSM AGUA LARGA', 0),
+(96, 28, 'SIMON BOLIVAR', 0),
+(97, 28, '4 DE FEBRERO', 0),
+(98, 28, 'BSM EZEQUIEL ZAMORA', 0),
+(99, 38, 'BSM CHE GUEVARA', 0),
+(100, 39, 'BSM MARIA CRISTINA DE BELLO', 0),
+(101, 28, 'BSM EL SUEÑO DEL COMANDANTE', 0),
+(102, 40, 'SANTA ROSALIA', 0),
+(103, 41, 'BSM FUERZA TRIUNFADORA DE AVARIA', 0),
+(104, 42, 'BSM 4F HUGO CHAVEZ', 0),
+(105, 42, 'BSM NUEVA REVOLUCION', 0),
+(106, 43, 'BMS EL URUPAGUAL', 0),
+(107, 44, 'BSM JOSE LEONARDO CHIRINOS', 0),
+(108, 45, 'BSM LUIS LUGO', 0),
+(109, 46, 'BSM EBENEZER', 0),
+(110, 47, 'BSM JOSEFA CAMEJO', 0),
+(111, 48, 'BMS VANGUARDIA DEL OCCIDENTE', 0),
+(112, 49, 'BSM MANUELA SAENZ', 0),
+(113, 50, 'BSM DR. HENRY VENTURA', 0),
+(114, 51, 'BSM ADA WALTER', 0),
+(115, 51, 'BSM ADA ROMERO', 0),
+(116, 52, 'EL AMANECER DE CHAVEZ EN SU COSECHA', 0),
+(117, 53, 'ANTONIO JOSE DE SUCRE', 0),
+(118, 54, 'BSM ENTRE MAR Y SERRANIA', 0);
 
 -- --------------------------------------------------------
 
@@ -340,6 +403,43 @@ INSERT INTO `companies` (`id_company`, `name_company`, `mision_company`, `vision
 (7, 'Fundación Programa de Alimentos Estratégicos (FUNDAPROAL)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'media/companies/logos/FUNDAPROAL.png'),
 (8, 'EPS JOSEFA CAMEJO', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'media/companies/logos/EPS JOSEFA CAMEJO.png'),
 (9, 'La Corporación Nacional de Alimentación Escolar (CNAE)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'media/companies/logos/CNAE.png');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entrega_mision_mercal`
+--
+
+CREATE TABLE `entrega_mision_mercal` (
+  `id_entrega_mision_mercal` int(11) NOT NULL,
+  `base_de_mision_id` int(11) DEFAULT NULL,
+  `proteina_entregada` decimal(20,2) NOT NULL,
+  `clap_entregado` decimal(20,2) NOT NULL,
+  `fecha_entrega` date NOT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `entrega_mision_mercal`
+--
+
+INSERT INTO `entrega_mision_mercal` (`id_entrega_mision_mercal`, `base_de_mision_id`, `proteina_entregada`, `clap_entregado`, `fecha_entrega`, `created_at`, `user_id`) VALUES
+(7, 87, '1.00', '2.00', '2023-07-02', '2023-07-02', 1),
+(8, 87, '6.00', '10.00', '2023-06-25', '2023-07-02', 1),
+(9, 84, '10.00', '20.00', '2023-06-28', '2023-07-02', 1),
+(10, 84, '9.00', '1.00', '2023-06-29', '2023-07-02', 1),
+(11, 84, '9.00', '1.00', '2023-06-29', '2023-07-02', 1),
+(12, 84, '9.00', '1.00', '2023-06-29', '2023-07-02', 1),
+(13, 84, '9.00', '1.00', '2023-06-29', '2023-07-02', 1),
+(14, 84, '9.00', '1.00', '2023-06-29', '2023-07-02', 1),
+(15, 84, '9.00', '1.00', '2023-06-29', '2023-07-02', 1),
+(16, 84, '9.00', '1.00', '2023-06-24', '2023-07-02', 1),
+(17, 84, '0.00', '200.00', '2023-06-24', '2023-07-02', 1),
+(18, 78, '60000.00', '0.00', '2023-07-03', '2023-07-02', 1),
+(19, 78, '60000.00', '0.00', '2023-07-03', '2023-07-02', 1),
+(20, 84, '0.00', '200000.00', '2023-07-03', '2023-07-02', 1),
+(21, 84, '100000.00', '0.00', '2023-07-03', '2023-07-02', 1);
 
 -- --------------------------------------------------------
 
@@ -791,6 +891,55 @@ INSERT INTO `municipios` (`id_municipio`, `name_municipio`, `cantidad_parroquias
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `parroquias`
+--
+
+CREATE TABLE `parroquias` (
+  `id_parroquias` int(11) NOT NULL,
+  `municipio_id` int(11) DEFAULT NULL,
+  `name_parroquia` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `parroquias`
+--
+
+INSERT INTO `parroquias` (`id_parroquias`, `municipio_id`, `name_parroquia`) VALUES
+(24, 10, 'Moruy'),
+(25, 10, 'El Vinculo'),
+(26, 21, 'Tucacas'),
+(27, 11, 'Agua Larga'),
+(28, 15, 'San Antonio'),
+(29, 19, 'Píritu'),
+(30, 7, 'La Vela'),
+(31, 14, 'Casigua'),
+(32, 6, 'Carirubana'),
+(33, 13, 'Judibana'),
+(34, 20, 'Mirimire'),
+(35, 12, 'Jacura'),
+(36, 12, 'Agua Linda'),
+(37, 25, 'Buzual'),
+(38, 4, 'Capatarida'),
+(39, 24, 'Vegas del Tuy'),
+(40, 6, 'Norte'),
+(41, 9, 'Avaria'),
+(42, 16, 'Chichirivichi'),
+(43, 18, 'Cabure'),
+(44, 18, 'Colina'),
+(45, 3, 'San Luis'),
+(46, 9, 'Pedregal'),
+(47, 26, 'Puerto Cumarebo'),
+(48, 8, 'Dabajuro'),
+(49, 24, 'El Chral'),
+(50, 17, 'Palmasola'),
+(51, 23, 'Tocópero'),
+(52, 6, 'Punta Cardon'),
+(53, 22, 'Pecaya'),
+(54, 2, 'La Pastora');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -820,6 +969,13 @@ INSERT INTO `users` (`id_user`, `name_user`, `email_user`, `password_user`, `rol
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `base_de_mision`
+--
+ALTER TABLE `base_de_mision`
+  ADD PRIMARY KEY (`id_base_de_mision`),
+  ADD KEY `fk_parroquia` (`parroquia_id`);
 
 --
 -- Indices de la tabla `clap_carga`
@@ -870,6 +1026,14 @@ ALTER TABLE `cnae_por_municipio`
 --
 ALTER TABLE `companies`
   ADD PRIMARY KEY (`id_company`);
+
+--
+-- Indices de la tabla `entrega_mision_mercal`
+--
+ALTER TABLE `entrega_mision_mercal`
+  ADD PRIMARY KEY (`id_entrega_mision_mercal`),
+  ADD KEY `fk_base_de_mision` (`base_de_mision_id`),
+  ADD KEY `fk_user` (`user_id`);
 
 --
 -- Indices de la tabla `fundaproal_carga`
@@ -936,6 +1100,13 @@ ALTER TABLE `municipios`
   ADD PRIMARY KEY (`id_municipio`);
 
 --
+-- Indices de la tabla `parroquias`
+--
+ALTER TABLE `parroquias`
+  ADD PRIMARY KEY (`id_parroquias`),
+  ADD KEY `fk_municipio` (`municipio_id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -944,6 +1115,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `base_de_mision`
+--
+ALTER TABLE `base_de_mision`
+  MODIFY `id_base_de_mision` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT de la tabla `clap_carga`
@@ -986,6 +1163,12 @@ ALTER TABLE `cnae_por_municipio`
 --
 ALTER TABLE `companies`
   MODIFY `id_company` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `entrega_mision_mercal`
+--
+ALTER TABLE `entrega_mision_mercal`
+  MODIFY `id_entrega_mision_mercal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `fundaproal_carga`
@@ -1042,6 +1225,12 @@ ALTER TABLE `municipios`
   MODIFY `id_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
+-- AUTO_INCREMENT de la tabla `parroquias`
+--
+ALTER TABLE `parroquias`
+  MODIFY `id_parroquias` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
@@ -1050,6 +1239,12 @@ ALTER TABLE `users`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `base_de_mision`
+--
+ALTER TABLE `base_de_mision`
+  ADD CONSTRAINT `base_de_mision_ibfk_1` FOREIGN KEY (`parroquia_id`) REFERENCES `parroquias` (`id_parroquias`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `clap_carga`
@@ -1078,6 +1273,13 @@ ALTER TABLE `cnae_carga`
 ALTER TABLE `cnae_por_municipio`
   ADD CONSTRAINT `cnae_por_municipio_ibfk_1` FOREIGN KEY (`municipio_id_cnae_por_municipio`) REFERENCES `municipios` (`id_municipio`) ON DELETE SET NULL ON UPDATE NO ACTION,
   ADD CONSTRAINT `cnae_por_municipio_ibfk_2` FOREIGN KEY (`mes_id_cnae_por_municipio`) REFERENCES `cnae_por_mes` (`id_cnae_por_mes`) ON DELETE SET NULL ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `entrega_mision_mercal`
+--
+ALTER TABLE `entrega_mision_mercal`
+  ADD CONSTRAINT `entrega_mision_mercal_ibfk_1` FOREIGN KEY (`base_de_mision_id`) REFERENCES `base_de_mision` (`id_base_de_mision`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  ADD CONSTRAINT `entrega_mision_mercal_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `fundaproal_carga`
@@ -1113,6 +1315,12 @@ ALTER TABLE `inn_por_municipio`
 ALTER TABLE `mercal_recepcion_despacho`
   ADD CONSTRAINT `mercal_recepcion_despacho_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE SET NULL ON UPDATE NO ACTION,
   ADD CONSTRAINT `mercal_recepcion_despacho_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `mercal_stock_programas` (`id_mercal_stock_programas`) ON DELETE SET NULL ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `parroquias`
+--
+ALTER TABLE `parroquias`
+  ADD CONSTRAINT `parroquias_ibfk_1` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id_municipio`) ON DELETE SET NULL ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

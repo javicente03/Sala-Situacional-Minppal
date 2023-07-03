@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col col-lg-8 m-auto col-md-8 col-sm-12 col-12">
                 <div class="main-header-content">
-                    <h1>MERCAL</h1>
+                    <h1>MERCAL - Programas Sociales</h1>
                     <p>
                         Recepción
                     </p>

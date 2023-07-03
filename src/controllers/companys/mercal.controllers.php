@@ -866,6 +866,14 @@ function Export_Pdf_Mercal_Por_Programa ($id) {
             ';
         }
 
+        if (count($movimientos) == 0) {
+            $html_tablas_por_programa .= '
+                <tr style="text-align: center; word-break: break-word; font-size: 7px;">
+                    <td colspan="5" class="description">No hay movimientos registrados</td>
+                </tr>
+            ';
+        }
+
         $html_tablas_por_programa .= '</tbody></table>';
 
         $pdf->writeHTML($html_tablas_por_programa, true, false, true, false, '');

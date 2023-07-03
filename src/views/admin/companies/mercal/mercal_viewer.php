@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col col-lg-8 m-auto col-md-8 col-sm-12 col-12">
                 <div class="main-header-content">
-                    <h1>MERCAL</h1>
+                    <h1>MERCAL - Programas Sociales</h1>
                     <p>
                         Módulo para administrar MERCAL
                     </p>
@@ -28,7 +28,7 @@
 
                 <div class="col col-xl-12 order-xl-2 col-lg-12 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
                     <div class="ui-block ui-block-title ui-block-title-small containerFilters">
-                        <h6 class="title" >Data de Mercado de Alimentos</h6>
+                        <h6 class="title" >Data de Mercado de Alimentos - Programas Sociales</h6>
                     </div>
                     <div class="ui-block ui-block-title ui-block-title-small containerFilters">
                         <div class="row" style="display:flex; flex-wrap: wrap">
@@ -85,6 +85,10 @@
                                             <a href="/admin/mercal/program/<?php echo $programa['id_mercal_stock_programas']; ?>"
                                             class="btn btn-primary btn-sm" title="Ver detalle" target="_blank">
                                                 <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="/admin/mercal/export-pdf/<?php echo $programa['id_mercal_stock_programas']; ?>?start=<?php echo $start; ?>&end=<?php echo $end; ?>&filter_type=all" target="_blank"
+                                            class="btn btn-primary btn-sm" title="Ver detalle">
+                                                <i class="fas fa-download"></i>
                                             </a>
                                         </td>
                                         <td class="author">

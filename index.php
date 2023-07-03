@@ -11,6 +11,7 @@ require_once 'src/controllers/companys/clap.controllers.php';
 require_once 'src/controllers/companys/inn.controllers.php';
 require_once 'src/controllers/companys/fundaproal.controllers.php';
 require_once 'src/controllers/companys/mercal.controllers.php';
+require_once 'src/controllers/companys/mercal_misiones.controllers.php';
 session_start();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -88,6 +89,18 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/mercal/program/{id}', 'Movimientos_Programa');
         $r->addRoute('GET', '/mercal/export-pdf', 'Export_Pdf_Mercal_Programas');
         $r->addRoute('GET', '/mercal/export-pdf/{id}', 'Export_Pdf_Mercal_Por_Programa');
+
+        // MERCAL - MISIONES
+        $r->addRoute('GET', '/mercal-bm/create-parroquias', 'Create_Parroquias');
+        $r->addRoute('GET', '/mercal-bm/create-misiones', 'Create_Bases_Misiones');
+        $r->addRoute('GET', '/mercal-bm', 'Mercal_Misiones_Viewer');
+        $r->addRoute('GET', '/mercal-bm/edit/{id}', 'Mercal_Misiones_Edit');
+        $r->addRoute('POST', '/mercal-bm/edit', 'Mercal_Misiones_Put');
+        $r->addRoute('GET', '/mercal-bm/mision/{id}', 'Mercal_Misiones_Detalle');
+        $r->addRoute('GET', '/mercal-bm/load', 'Mercal_Misiones_Load');
+        $r->addRoute('POST', '/mercal-bm/load', 'Mercal_Misiones_Load_Post');
+        $r->addRoute('GET', '/mercal-bm/export-pdf', 'Mercal_Misiones_Export_Pdf');
+        $r->addRoute('GET', '/mercal-bm/export-pdf/{id}', 'Mercal_Misiones_Detalle_Export_Pdf');
     });
 
     $r->addRoute('GET', '/generarHash', function() {

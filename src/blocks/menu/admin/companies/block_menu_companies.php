@@ -33,7 +33,10 @@
                                     <a href="/admin/fundaproal">FUNDAPROAL</a>
                                 </li>
                                 <li>
-                                    <a href="/admin/mercal">MERCAL</a>
+                                    <a href="/admin/mercal">MERCAL - Programas</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/mercal-bm">MERCAL - Misiones</a>
                                 </li>
                             </ul>
                         </div>
