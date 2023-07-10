@@ -36,7 +36,7 @@
 									<a href="/auth/logout">
 										<svg class="olymp-logout-icon"><use xlink:href="#olymp-logout-icon"></use></svg>
 
-										<span>Log Out</span>
+										<span>Cerrar Sesión</span>
 									</a>
 								</li>
 							</ul>

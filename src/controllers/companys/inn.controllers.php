@@ -870,3 +870,191 @@ function Export_PDF_INN_Por_Mes ($id) {
         http_response_code(400);
     }
 }
+
+
+// ------- USER LECTOR ------- //
+
+function INN_Viewer_USER () {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    // Obtener el ultimo mes registrado
+    $sql_last_month = "SELECT * FROM inn_por_mes ORDER BY id_inn_por_mes DESC LIMIT 1";
+    $result_last_month = $conn->prepare($sql_last_month);
+    $result_last_month->execute();
+    $last_month = $result_last_month->fetch(PDO::FETCH_ASSOC);
+
+    // Si el ultimo mes registrado es el actual, no se puede crear un nuevo mes
+    // Si el ultimo mes registrado ya es el anterior, se puede crear un nuevo mes
+    // fin_inn_por_mes, tiene el ultimo dia del mes registrado: Ej: 2021-05-31
+    // Verifica si la fecha actual es mayor a la fecha del ultimo mes registrado
+    if ($last_month) {
+        if (date('Y-m-d') > $last_month['fecha_fin_inn_por_mes']) {
+            Create_New_Data_INN($last_month);
+        }
+    } else {
+        Create_New_Data_INN(null);
+    }
+
+    // Obtener todas las datas INN por mes
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+
+    // $sql_inn_por_mes = "SELECT * FROM inn_por_mes ORDER BY id_inn_por_mes DESC LIMIT $offset, $limit";
+    // necesito que me traiga la sumatoria de los inn_por_municipio (proteina_asignada_inn, clap_asignados, personas_por_atender)
+    $sql_inn_por_mes = "SELECT inn_por_mes.id_inn_por_mes, inn_por_mes.fecha_inicio_inn_por_mes, inn_por_mes.fecha_fin_inn_por_mes, 
+                                SUM(inn_por_municipio.proteina_asignada) AS proteina_asignada, 
+                                SUM(inn_por_municipio.clap_asignados) AS clap_asignados, 
+                                SUM(inn_por_municipio.personas_por_atender) AS personas_por_atender
+                                FROM inn_por_mes INNER JOIN inn_por_municipio ON inn_por_mes.id_inn_por_mes = inn_por_municipio.mes_id
+                                GROUP BY inn_por_mes.id_inn_por_mes ORDER BY inn_por_mes.id_inn_por_mes DESC LIMIT $offset, $limit";
+    $result_inn_por_mes = $conn->prepare($sql_inn_por_mes);
+    $result_inn_por_mes->execute();
+    $inn_por_mes = $result_inn_por_mes->fetchAll(PDO::FETCH_ASSOC);
+
+    $data_return = array();
+
+    foreach ($inn_por_mes as $inn) {
+
+        // Obtener las sumatorias de las cargas
+        $sql = "SELECT SUM(inn_carga.proteina_despachada) AS proteina_despachada, 
+                                    SUM(inn_carga.clap_despachados) AS clap_despachados,
+                                    SUM(inn_carga.personas_atendidas) AS personas_atendidas 
+                                    FROM inn_carga INNER JOIN inn_por_municipio ON inn_carga.inn_por_municipio_id = inn_por_municipio.id_inn_por_municipio 
+                                    WHERE inn_por_municipio.mes_id = ?";
+        $result = $conn->prepare($sql);
+        $result->bindParam(1, $inn['id_inn_por_mes']);
+        $result->execute();
+        $inn_carga = $result->fetch(PDO::FETCH_ASSOC);
+
+        $data_return[] = array(
+            'id_inn_por_mes' => $inn['id_inn_por_mes'],
+            'fecha_inicio_inn_por_mes' => $inn['fecha_inicio_inn_por_mes'],
+            'fecha_fin_inn_por_mes' => $inn['fecha_fin_inn_por_mes'],
+            'proteina_asignada' => number_format($inn['proteina_asignada'], 2, ',', '.'),
+            'clap_asignados' => number_format($inn['clap_asignados'], 0, ',', '.'),
+            'personas_por_atender' => number_format($inn['personas_por_atender'], 0, ',', '.'),
+            'proteina_despachada' => number_format($inn_carga['proteina_despachada'], 2, ',', '.'),
+            'clap_despachados' => number_format($inn_carga['clap_despachados'], 0, ',', '.'),
+            'personas_atendidas' => number_format($inn_carga['personas_atendidas'], 0, ',', '.'),
+            'porcentaje_proteina_despachada' => $inn['proteina_asignada'] == 0 ? 0 : number_format(($inn_carga['proteina_despachada'] / $inn['proteina_asignada']) * 100, 2, ',', '.'),
+            'porcentaje_clap_despachados' => $inn['clap_asignados'] == 0 ? 0 : number_format(($inn_carga['clap_despachados'] / $inn['clap_asignados']) * 100, 2, ',', '.'),
+            'porcentaje_personas_atendidas' => $inn['personas_por_atender'] == 0 ? 0 : number_format(($inn_carga['personas_atendidas'] / $inn['personas_por_atender']) * 100, 2, ',', '.'),
+        );
+    }
+
+    // Console_log($data_return);
+    echo '<script>console.log(' . json_encode($data_return) . ')</script>';
+
+    // Obtener el total
+    $sql_total = "SELECT COUNT(*) AS total FROM inn_por_mes";
+    $result_total = $conn->prepare($sql_total);
+    $result_total->execute();
+    $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - INN';
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/inn/inn_viewer.php';
+    include_once 'src/blocks/footer.php';
+}
+
+function Get_INN_Por_Mes_USER ($id) {
+    try {
+        require 'src/database/connection.php';
+
+        // Obtener todas las datas INN por mes, igual su relacion con inn_por_municipio
+        $sql_inn_por_mes = "SELECT inn_por_mes.id_inn_por_mes, inn_por_mes.fecha_inicio_inn_por_mes, inn_por_mes.fecha_fin_inn_por_mes, SUM(inn_por_municipio.proteina_asignada) AS proteina_asignada, SUM(inn_por_municipio.clap_asignados) AS clap_asignados, SUM(inn_por_municipio.personas_por_atender) AS personas_por_atender FROM inn_por_mes INNER JOIN inn_por_municipio ON inn_por_mes.id_inn_por_mes = inn_por_municipio.mes_id WHERE inn_por_mes.id_inn_por_mes = ? GROUP BY inn_por_mes.id_inn_por_mes ORDER BY inn_por_mes.id_inn_por_mes DESC";
+        $result_inn_por_mes = $conn->prepare($sql_inn_por_mes);
+        $result_inn_por_mes->bindParam(1, $id);
+        $result_inn_por_mes->execute();
+        $inn_por_mes = $result_inn_por_mes->fetch(PDO::FETCH_ASSOC);
+
+        // // Si no existe el mes, redireccionar
+        if (!$inn_por_mes) {
+            header('Location: /inn');
+            exit();
+        }
+
+        // // Paginacion
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+        $offset = ($page - 1) * $limit;
+
+        // // Obtener todas las datas INN por municipio relacionado al municipio
+        $sql_inn_por_municipio = "SELECT * FROM inn_por_municipio INNER JOIN municipios ON inn_por_municipio.municipio_id = municipios.id_municipio WHERE inn_por_municipio.mes_id = ? ORDER BY inn_por_municipio.id_inn_por_municipio ASC LIMIT $limit OFFSET $offset";
+        $result_inn_por_municipio = $conn->prepare($sql_inn_por_municipio);
+        $result_inn_por_municipio->bindParam(1, $id);
+        $result_inn_por_municipio->execute();
+        $inn_por_municipio = $result_inn_por_municipio->fetchAll(PDO::FETCH_ASSOC);
+
+        $data_return = array();
+
+        foreach ($inn_por_municipio as $inn) {
+            
+            // Obtener las sumatorias de las cargas
+            $sql = "SELECT SUM(inn_carga.proteina_despachada) AS proteina_despachada,
+                                        SUM(inn_carga.clap_despachados) AS clap_despachados,
+                                        SUM(inn_carga.personas_atendidas) AS personas_atendidas
+                                        FROM inn_carga WHERE inn_por_municipio_id = ?";
+            $result = $conn->prepare($sql);
+            $result->bindParam(1, $inn['id_inn_por_municipio']);
+            $result->execute();
+            $inn_carga = $result->fetch(PDO::FETCH_ASSOC);
+
+            // $inn['proteina_asignada'] si es 0, no se puede dividir entre 0
+            $porcentaje_proteina_despachada = $inn['proteina_asignada'] != 0 ? ($inn_carga['proteina_despachada'] * 100) / $inn['proteina_asignada'] : 0;
+            $porcentaje_clap_despachados = $inn['clap_asignados'] != 0 ? ($inn_carga['clap_despachados'] * 100) / $inn['clap_asignados'] : 0;
+            $porcentaje_personas_atendidas = $inn['personas_por_atender'] != 0 ? ($inn_carga['personas_atendidas'] * 100) / $inn['personas_por_atender'] : 0;
+
+            $data_return[] = array(
+                'id_inn_por_municipio' => $inn['id_inn_por_municipio'],
+                'municipio_id' => $inn['municipio_id'],
+                'name_municipio' => $inn['name_municipio'],
+                'proteina_asignada' => number_format($inn['proteina_asignada'], 2, ',', '.'),
+                'clap_asignados' => number_format($inn['clap_asignados'], 0, ',', '.'),
+                'personas_por_atender' => number_format($inn['personas_por_atender'], 0, ',', '.'),
+                'proteina_despachada' => number_format($inn_carga['proteina_despachada'], 2, ',', '.'),
+                'clap_despachados' => number_format($inn_carga['clap_despachados'], 0, ',', '.'),
+                'personas_atendidas' => number_format($inn_carga['personas_atendidas'], 0, ',', '.'),
+                'porcentaje_proteina_despachada' => number_format($porcentaje_proteina_despachada, 2, ',', '.'),
+                'porcentaje_clap_despachados' => number_format($porcentaje_clap_despachados, 2, ',', '.'),
+                'porcentaje_personas_atendidas' => number_format($porcentaje_personas_atendidas, 2, ',', '.')
+            );
+        }
+
+        echo '<script>console.log(' . json_encode($data_return) . ')</script>';
+
+        // Obtener el total
+        $sql_total = "SELECT COUNT(*) AS total FROM inn_por_municipio WHERE mes_id = ?";
+        $result_total = $conn->prepare($sql_total);
+        $result_total->bindParam(1, $id);
+        $result_total->execute();
+        $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+        $totalPages = ceil($total / $limit);
+
+        setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp');
+        $month_year = strftime("%B %Y", strtotime($inn_por_mes['fecha_inicio_inn_por_mes']));
+
+        $title = 'MINPPAL - INN - ' . $month_year;
+        include_once 'src/blocks/header.php';
+        include_once 'src/blocks/menu/admin/menu.php';
+        include_once 'src/blocks/menu/admin/menu_responsive.php';
+        include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+        include_once 'src/views/user/companies/inn/inn_municipios.php';
+        include_once 'src/blocks/footer.php';
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+
+}
+
+// ------- USER LECTOR ------- //

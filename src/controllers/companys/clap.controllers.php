@@ -489,3 +489,44 @@ function Export_Pdf_Clap_Por_Entrega ($id) {
         http_response_code(400);
     }
 } 
+
+// ---------- USER LECTOR ---------- //
+
+function Clap_Viewer_USER () {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+
+    $sql = "SELECT clap_por_entrega.*, SUM(clap_carga.cantidad) as beneficios_entregados
+        FROM clap_por_entrega 
+        LEFT JOIN clap_por_municipio ON clap_por_entrega.id_clap_por_entrega = clap_por_municipio.entrega_clap_id
+        LEFT JOIN clap_carga ON clap_por_municipio.id_clap_por_municipio = clap_carga.clap_por_municipio_id
+        GROUP BY clap_por_entrega.id_clap_por_entrega
+        ORDER BY clap_por_entrega.id_clap_por_entrega DESC LIMIT $offset, $limit";
+    $result = $conn->prepare($sql);
+    $result->execute();
+    $claps = $result->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql = "SELECT COUNT(*) as total FROM clap_por_entrega";
+    $result = $conn->prepare($sql);
+    $result->execute();
+    $total = $result->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - CLAP';
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/clap/clap_viewer.php';
+    include_once 'src/blocks/footer.php';
+}
+
+// ---------- USER LECTOR ---------- //

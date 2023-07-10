@@ -1063,3 +1063,238 @@ function Export_PDF_FUNDAPROAL_Por_Mes ($id) {
         http_response_code(400);
     }
 }
+
+
+// ---------- USER LECTOR ---------- //
+
+function FUNDAPROAL_Viewer_USER () {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    // Obtener el ultimo mes registrado
+    $sql_last_month = "SELECT * FROM fundaproal_por_mes ORDER BY id_fundaproal_por_mes DESC LIMIT 1";
+    $result_last_month = $conn->prepare($sql_last_month);
+    $result_last_month->execute();
+    $last_month = $result_last_month->fetch(PDO::FETCH_ASSOC);
+
+    // Si el ultimo mes registrado es el actual, no se puede crear un nuevo mes
+    // Si el ultimo mes registrado ya es el anterior, se puede crear un nuevo mes
+    // fin_fundaproal_por_mes, tiene el ultimo dia del mes registrado: Ej: 2021-05-31
+    // Verifica si la fecha actual es mayor a la fecha del ultimo mes registrado
+    if ($last_month) {
+        if (date('Y-m-d') > $last_month['fecha_fin_fundaproal_por_mes']) {
+            Create_New_Data_FUNDAPROAL($last_month);
+        }
+    } else {
+        Create_New_Data_FUNDAPROAL(null);
+    }
+
+    // Obtener todas las datas FUNDAPROAL por mes
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+
+    // $sql_fundaproal_por_mes = "SELECT * FROM fundaproal_por_mes ORDER BY id_fundaproal_por_mes DESC LIMIT $offset, $limit";
+    // necesito que me traiga la sumatoria de los fundaproal_por_municipio (proteina_asignada, clap_asignados, fruta_asignada, cantidad_casas_alimentacion, cemr, cantidad_misioneros, cantidad_madres_elab, cantidad_padres_elab, plan_paca_asignado, plan_papa_asignado)
+    $sql_fundaproal_por_mes = "SELECT fundaproal_por_mes.id_fundaproal_por_mes, fundaproal_por_mes.fecha_inicio_fundaproal_por_mes, fundaproal_por_mes.fecha_fin_fundaproal_por_mes, 
+                                SUM(fundaproal_por_municipio.proteina_asignada) AS proteina_asignada, 
+                                SUM(fundaproal_por_municipio.clap_asignados) AS clap_asignados, 
+                                SUM(fundaproal_por_municipio.fruta_asignada) AS fruta_asignada, 
+                                SUM(fundaproal_por_municipio.cantidad_casas_alimentacion) AS cantidad_casas_alimentacion,
+                                SUM(fundaproal_por_municipio.cemr) AS cemr,
+                                SUM(fundaproal_por_municipio.cantidad_misioneros) AS cantidad_misioneros,
+                                SUM(fundaproal_por_municipio.cantidad_madres_elab) AS cantidad_madres_elab,
+                                SUM(fundaproal_por_municipio.cantidad_padres_elab) AS cantidad_padres_elab,
+                                SUM(fundaproal_por_municipio.plan_paca_asignado) AS plan_paca_asignado,
+                                SUM(fundaproal_por_municipio.plan_papa_asignado) AS plan_papa_asignado
+                                FROM fundaproal_por_mes INNER JOIN fundaproal_por_municipio ON fundaproal_por_mes.id_fundaproal_por_mes = fundaproal_por_municipio.mes_id 
+                                GROUP BY fundaproal_por_mes.id_fundaproal_por_mes ORDER BY fundaproal_por_mes.id_fundaproal_por_mes DESC LIMIT $offset, $limit";
+    $result_fundaproal_por_mes = $conn->prepare($sql_fundaproal_por_mes);
+    $result_fundaproal_por_mes->execute();
+    $fundaproal_por_mes = $result_fundaproal_por_mes->fetchAll(PDO::FETCH_ASSOC);
+
+    $data_return = array();
+
+    foreach ($fundaproal_por_mes as $fundaproal) {
+
+        // Obtener las sumatorias de las cargas
+        $sql_fundaproal_carga = "SELECT SUM(fundaproal_carga.proteina_despachada) AS proteina_despachada, 
+                                    SUM(fundaproal_carga.clap_despachados) AS clap_despachados, 
+                                    SUM(fundaproal_carga.fruta_despachada) AS fruta_despachada, 
+                                    SUM(fundaproal_carga.plan_paca_despachado) AS plan_paca_despachado,
+                                    SUM(fundaproal_carga.plan_papa_despachado) AS plan_papa_despachado
+                                    FROM fundaproal_carga INNER JOIN fundaproal_por_municipio ON fundaproal_carga.fundaproal_por_municipio_id = fundaproal_por_municipio.id_fundaproal_por_municipio 
+                                    WHERE fundaproal_por_municipio.mes_id = ?";
+        $result_fundaproal_carga = $conn->prepare($sql_fundaproal_carga);
+        $result_fundaproal_carga->bindParam(1, $fundaproal['id_fundaproal_por_mes']);
+        $result_fundaproal_carga->execute();
+        $fundaproal_carga = $result_fundaproal_carga->fetch(PDO::FETCH_ASSOC);
+
+        $data_return[] = array(
+            'id_fundaproal_por_mes' => $fundaproal['id_fundaproal_por_mes'],
+            'fecha_inicio_fundaproal_por_mes' => $fundaproal['fecha_inicio_fundaproal_por_mes'],
+            'fecha_fin_fundaproal_por_mes' => $fundaproal['fecha_fin_fundaproal_por_mes'],
+            'proteina_asignada' => number_format($fundaproal['proteina_asignada'], 2, ',', '.'),
+            'clap_asignados' => number_format($fundaproal['clap_asignados'], 0, ',', '.'),
+            'fruta_asignada' => number_format($fundaproal['fruta_asignada'], 2, ',', '.'),
+            'cantidad_casas_alimentacion' => number_format($fundaproal['cantidad_casas_alimentacion'], 0, ',', '.'),
+            'cemr' => number_format($fundaproal['cemr'], 0, ',', '.'),
+            'cantidad_misioneros' => number_format($fundaproal['cantidad_misioneros'], 0, ',', '.'),
+            'cantidad_madres_elab' => number_format($fundaproal['cantidad_madres_elab'], 0, ',', '.'),
+            'cantidad_padres_elab' => number_format($fundaproal['cantidad_padres_elab'], 0, ',', '.'),
+            'plan_paca_asignado' => number_format($fundaproal['plan_paca_asignado'], 0, ',', '.'),
+            'plan_papa_asignado' => number_format($fundaproal['plan_papa_asignado'], 0, ',', '.'),
+            'proteina_despachada' => number_format($fundaproal_carga['proteina_despachada'], 2, ',', '.'),
+            'clap_despachados' => number_format($fundaproal_carga['clap_despachados'], 0, ',', '.'),
+            'fruta_despachada' => number_format($fundaproal_carga['fruta_despachada'], 2, ',', '.'),
+            'plan_paca_despachado' => number_format($fundaproal_carga['plan_paca_despachado'], 0, ',', '.'),
+            'plan_papa_despachado' => number_format($fundaproal_carga['plan_papa_despachado'], 0, ',', '.'),
+            'porcentaje_proteina_despachada' => $fundaproal['proteina_asignada'] == 0 ? 0 : number_format(($fundaproal_carga['proteina_despachada'] / $fundaproal['proteina_asignada']) * 100, 2, ',', '.'),
+            'porcentaje_clap_despachados' => $fundaproal['clap_asignados'] == 0 ? 0 : number_format(($fundaproal_carga['clap_despachados'] / $fundaproal['clap_asignados']) * 100, 2, ',', '.'),
+            'porcentaje_fruta_despachada' => $fundaproal['fruta_asignada'] == 0 ? 0 : number_format(($fundaproal_carga['fruta_despachada'] / $fundaproal['fruta_asignada']) * 100, 2, ',', '.'),
+            'porcentaje_plan_paca_despachado' => $fundaproal['plan_paca_asignado'] == 0 ? 0 : number_format(($fundaproal_carga['plan_paca_despachado'] / $fundaproal['plan_paca_asignado']) * 100, 2, ',', '.'),
+            'porcentaje_plan_papa_despachado' => $fundaproal['plan_papa_asignado'] == 0 ? 0 : number_format(($fundaproal_carga['plan_papa_despachado'] / $fundaproal['plan_papa_asignado']) * 100, 2, ',', '.'),
+        );
+    }
+
+    // Console_log($data_return);
+    echo '<script>console.log(' . json_encode($data_return) . ')</script>';
+
+    // Obtener el total
+    $sql_total = "SELECT COUNT(*) AS total FROM fundaproal_por_mes";
+    $result_total = $conn->prepare($sql_total);
+    $result_total->execute();
+    $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - FUNDAPROAL';
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/fundaproal/fundaproal_viewer.php';
+    include_once 'src/blocks/footer.php';
+}
+
+function Get_FUNDAPROAL_Por_Mes_USER ($id) {
+    try {
+        require 'src/database/connection.php';
+
+        // Obtener todas las datas FUNDAPROAL por mes, igual su relacion con fundaproal_por_municipio
+        $sql_fundaproal_por_mes = "SELECT fundaproal_por_mes.id_fundaproal_por_mes, fundaproal_por_mes.fecha_inicio_fundaproal_por_mes, fundaproal_por_mes.fecha_fin_fundaproal_por_mes, 
+        SUM(fundaproal_por_municipio.proteina_asignada) AS proteina_asignada, 
+        SUM(fundaproal_por_municipio.clap_asignados) AS clap_asignados, 
+        SUM(fundaproal_por_municipio.fruta_asignada) AS fruta_asignada,
+        SUM(fundaproal_por_municipio.cantidad_casas_alimentacion) AS cantidad_casas_alimentacion,
+        SUM(fundaproal_por_municipio.cantidad_misioneros) AS cantidad_misioneros,
+        SUM(fundaproal_por_municipio.cantidad_madres_elab) AS cantidad_madres_elab,
+        SUM(fundaproal_por_municipio.cantidad_padres_elab) AS cantidad_padres_elab,
+        SUM(fundaproal_por_municipio.plan_paca_asignado) AS plan_paca_asignado,
+        SUM(fundaproal_por_municipio.plan_papa_asignado) AS plan_papa_asignado,
+        SUM(fundaproal_por_municipio.cemr) AS cemr
+        FROM fundaproal_por_mes INNER JOIN fundaproal_por_municipio ON fundaproal_por_mes.id_fundaproal_por_mes = fundaproal_por_municipio.mes_id 
+        WHERE fundaproal_por_mes.id_fundaproal_por_mes = ? GROUP BY fundaproal_por_mes.id_fundaproal_por_mes ORDER BY fundaproal_por_mes.id_fundaproal_por_mes DESC";
+        $result_fundaproal_por_mes = $conn->prepare($sql_fundaproal_por_mes);
+        $result_fundaproal_por_mes->bindParam(1, $id);
+        $result_fundaproal_por_mes->execute();
+        $fundaproal_por_mes = $result_fundaproal_por_mes->fetch(PDO::FETCH_ASSOC);
+
+        // // Si no existe el mes, redireccionar
+        if (!$fundaproal_por_mes) {
+            header('Location: /fundaproal');
+            exit();
+        }
+
+        // // Paginacion
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+        $offset = ($page - 1) * $limit;
+
+        // // Obtener todas las datas FUNDAPROAL por municipio relacionado al municipio
+        $sql_fundaproal_por_municipio = "SELECT * FROM fundaproal_por_municipio INNER JOIN municipios ON fundaproal_por_municipio.municipio_id = municipios.id_municipio WHERE fundaproal_por_municipio.mes_id = ? ORDER BY fundaproal_por_municipio.id_fundaproal_por_municipio ASC LIMIT $limit OFFSET $offset";
+        $result_fundaproal_por_municipio = $conn->prepare($sql_fundaproal_por_municipio);
+        $result_fundaproal_por_municipio->bindParam(1, $id);
+        $result_fundaproal_por_municipio->execute();
+        $fundaproal_por_municipio = $result_fundaproal_por_municipio->fetchAll(PDO::FETCH_ASSOC);
+
+        $data_return = array();
+
+        foreach ($fundaproal_por_municipio as $fundaproal) {
+            
+            // Obtener las sumatorias de las cargas
+            $sql = "SELECT SUM(fundaproal_carga.proteina_despachada) AS proteina_despachada,
+                                        SUM(fundaproal_carga.clap_despachados) AS clap_despachados,
+                                        SUM(fundaproal_carga.fruta_despachada) AS fruta_despachada,
+                                        SUM(fundaproal_carga.plan_paca_despachado) AS plan_paca_despachado,
+                                        SUM(fundaproal_carga.plan_papa_despachado) AS plan_papa_despachado
+                                        FROM fundaproal_carga WHERE fundaproal_por_municipio_id = ?";
+            $result = $conn->prepare($sql);
+            $result->bindParam(1, $fundaproal['id_fundaproal_por_municipio']);
+            $result->execute();
+            $fundaproal_carga = $result->fetch(PDO::FETCH_ASSOC);
+
+            // $fundaproal['proteina_asignada'] si es 0, no se puede dividir entre 0
+            $porcentaje_proteina_despachada = $fundaproal['proteina_asignada'] != 0 ? ($fundaproal_carga['proteina_despachada'] * 100) / $fundaproal['proteina_asignada'] : 0;
+            $porcentaje_clap_despachados = $fundaproal['clap_asignados'] != 0 ? ($fundaproal_carga['clap_despachados'] * 100) / $fundaproal['clap_asignados'] : 0;
+            $porcentaje_fruta_despachada = $fundaproal['fruta_asignada'] != 0 ? ($fundaproal_carga['fruta_despachada'] * 100) / $fundaproal['fruta_asignada'] : 0;
+            $porcentaje_plan_paca_despachado = $fundaproal['plan_paca_asignado'] != 0 ? ($fundaproal_carga['plan_paca_despachado'] * 100) / $fundaproal['plan_paca_asignado'] : 0;
+            $porcentaje_plan_papa_despachado = $fundaproal['plan_papa_asignado'] != 0 ? ($fundaproal_carga['plan_papa_despachado'] * 100) / $fundaproal['plan_papa_asignado'] : 0;
+
+            $data_return[] = array(
+                'id_fundaproal_por_municipio' => $fundaproal['id_fundaproal_por_municipio'],
+                'municipio_id' => $fundaproal['municipio_id'],
+                'name_municipio' => $fundaproal['name_municipio'],
+                'cantidad_casas_alimentacion' => number_format($fundaproal['cantidad_casas_alimentacion'], 0, ',', '.'),
+                'cantidad_misioneros' => number_format($fundaproal['cantidad_misioneros'], 0, ',', '.'),
+                'cantidad_madres_elab' => number_format($fundaproal['cantidad_madres_elab'], 0, ',', '.'),
+                'cantidad_padres_elab' => number_format($fundaproal['cantidad_padres_elab'], 0, ',', '.'),
+                'cemr' => number_format($fundaproal['cemr'], 0, ',', '.'),
+                'proteina_asignada' => number_format($fundaproal['proteina_asignada'], 2, ',', '.'),
+                'clap_asignados' => number_format($fundaproal['clap_asignados'], 0, ',', '.'),
+                'fruta_asignada' => number_format($fundaproal['fruta_asignada'], 2, ',', '.'),
+                'plan_paca_asignado' => number_format($fundaproal['plan_paca_asignado'], 0, ',', '.'),
+                'plan_papa_asignado' => number_format($fundaproal['plan_papa_asignado'], 0, ',', '.'),
+                'proteina_despachada' => number_format($fundaproal_carga['proteina_despachada'], 2, ',', '.'),
+                'clap_despachados' => number_format($fundaproal_carga['clap_despachados'], 0, ',', '.'),
+                'fruta_despachada' => number_format($fundaproal_carga['fruta_despachada'], 2, ',', '.'),
+                'plan_paca_despachado' => number_format($fundaproal_carga['plan_paca_despachado'], 0, ',', '.'),
+                'plan_papa_despachado' => number_format($fundaproal_carga['plan_papa_despachado'], 0, ',', '.'),
+                'porcentaje_proteina_despachada' => number_format($porcentaje_proteina_despachada, 2, ',', '.'),
+                'porcentaje_clap_despachados' => number_format($porcentaje_clap_despachados, 2, ',', '.'),
+                'porcentaje_fruta_despachada' => number_format($porcentaje_fruta_despachada, 2, ',', '.'),
+                'porcentaje_plan_paca_despachado' => number_format($porcentaje_plan_paca_despachado, 2, ',', '.'),
+                'porcentaje_plan_papa_despachado' => number_format($porcentaje_plan_papa_despachado, 2, ',', '.'),
+            );
+        }
+
+        echo '<script>console.log(' . json_encode($data_return) . ')</script>';
+
+        // Obtener el total
+        $sql_total = "SELECT COUNT(*) AS total FROM fundaproal_por_municipio WHERE mes_id = ?";
+        $result_total = $conn->prepare($sql_total);
+        $result_total->bindParam(1, $id);
+        $result_total->execute();
+        $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+        $totalPages = ceil($total / $limit);
+
+        setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp');
+        $month_year = strftime("%B %Y", strtotime($fundaproal_por_mes['fecha_inicio_fundaproal_por_mes']));
+
+        $title = 'MINPPAL - FUNDAPROAL - ' . $month_year;
+        include_once 'src/blocks/header.php';
+        include_once 'src/blocks/menu/admin/menu.php';
+        include_once 'src/blocks/menu/admin/menu_responsive.php';
+        include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+        include_once 'src/views/user/companies/fundaproal/fundaproal_municipios.php';
+        include_once 'src/blocks/footer.php';
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+
+}
+
+// ---------- USER LECTOR ---------- //

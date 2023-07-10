@@ -100,9 +100,7 @@ function Sesion() {
         if ($_SESSION['role'] == 'admin') {
             header('Location: /admin/users');
         } else {
-            echo 'Bienvenido Usuario';
-
-            session_destroy();
+            header('Location: /cnae');
         }
     } else {
         // redireccionar a la pagina de login

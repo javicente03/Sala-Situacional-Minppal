@@ -1004,3 +1004,127 @@ function Mercal_Misiones_Detalle_Export_Pdf ($id) {
         http_response_code(400);
     }
 }
+
+
+// ---------- USER LECTOR ---------- //
+
+function Mercal_Misiones_Viewer_USER () {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+
+    $sql_misiones = "SELECT * FROM base_de_mision 
+                    LEFT JOIN parroquias ON base_de_mision.parroquia_id = parroquias.id_parroquias
+                    LEFT JOIN municipios ON parroquias.municipio_id = municipios.id_municipio
+                    ORDER BY id_base_de_mision ASC LIMIT $offset, $limit";
+    $sql_misiones = $conn->prepare($sql_misiones);
+    $sql_misiones->execute();
+    $misiones = $sql_misiones->fetchAll();
+
+    // Si no viene start o end se toma el mes actual, es decir el primer y ultimo dia del mes
+    $start = isset($_GET['start']) ? $_GET['start'] : date('Y-m-01');
+    $end = isset($_GET['end']) ? $_GET['end'] : date('Y-m-t');
+
+    $sql_entregas = "SELECT base_de_mision_id,
+                    SUM(proteina_entregada) as proteina_entregada, 
+                    SUM(clap_entregado) as clap_entregado
+                    FROM entrega_mision_mercal 
+                    WHERE fecha_entrega BETWEEN '$start' AND '$end' 
+                    GROUP BY base_de_mision_id
+                    ORDER BY id_entrega_mision_mercal DESC";
+    $sql_entregas = $conn->prepare($sql_entregas);
+    $sql_entregas->execute();
+    $entregas = $sql_entregas->fetchAll();
+
+    $data_return = array();
+
+    foreach ($misiones as $mision) {
+        // Busca si en $entregas hay un base_de_mision_id igual al id_base_de_mision de $mision
+        $entregasNow = array_filter($entregas, function($entrega) use ($mision) {
+            return $entrega['base_de_mision_id'] == $mision['id_base_de_mision'];
+        });
+
+        $entregasNow = array_values($entregasNow);
+
+        $data_return[] = array(
+            'id_base_de_mision' => $mision['id_base_de_mision'],
+            'name_mision' => $mision['name_mision'],
+            'parroquia_id' => $mision['parroquia_id'],
+            'cantidad_familias' => $mision['cantidad_familias'],
+            'name_parroquia' => $mision['name_parroquia'],
+            'name_municipio' => $mision['name_municipio'],
+            'proteina_entregada' => isset($entregasNow[0]) ? $entregasNow[0]['proteina_entregada'] : 0,
+            'clap_entregado' => isset($entregasNow[0]) ? $entregasNow[0]['clap_entregado'] : 0,
+        );
+    }
+
+    // Obtener el total
+    $sql_total = "SELECT COUNT(*) AS total FROM base_de_mision";
+    $result_total = $conn->prepare($sql_total);
+    $result_total->execute();
+    $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - MERCAL';
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/mercal_bm/mercal_bm_viewer.php';
+    include_once 'src/blocks/footer.php';
+}
+
+function Mercal_Misiones_Detalle_USER ($id) {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+
+    $sql_mision = "SELECT bm.id_base_de_mision, bm.name_mision, bm.cantidad_familias, p.name_parroquia, m.name_municipio
+                    FROM base_de_mision as bm 
+                    LEFT JOIN parroquias as p ON bm.parroquia_id = p.id_parroquias
+                    LEFT JOIN municipios as m ON p.municipio_id = m.id_municipio
+                    WHERE id_base_de_mision = $id";
+    $sql_mision = $conn->prepare($sql_mision);
+    $sql_mision->execute();
+    $mision = $sql_mision->fetch(PDO::FETCH_ASSOC);
+
+    // Si no viene start o end se toma el mes actual, es decir el primer y ultimo dia del mes
+    $start = isset($_GET['start']) ? $_GET['start'] : date('Y-m-01');
+    $end = isset($_GET['end']) ? $_GET['end'] : date('Y-m-t');
+
+    $sql_entregas = "SELECT * FROM entrega_mision_mercal WHERE base_de_mision_id = $id AND fecha_entrega 
+                    BETWEEN '$start' AND '$end' ORDER BY fecha_entrega ASC LIMIT $offset, $limit";
+    $sql_entregas = $conn->prepare($sql_entregas);
+    $sql_entregas->execute();
+    $entregas = $sql_entregas->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql_total = "SELECT COUNT(*) as total FROM entrega_mision_mercal WHERE base_de_mision_id = $id AND fecha_entrega BETWEEN '$start' AND '$end'";
+    $sql_total = $conn->prepare($sql_total);
+    $sql_total->execute();
+    $total = $sql_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - MERCAL - '.$mision['name_mision'];
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/mercal_bm/mercal_bm_detalle.php';
+    include_once 'src/blocks/footer.php';
+}
+
+// ---------- USER LECTOR ---------- //

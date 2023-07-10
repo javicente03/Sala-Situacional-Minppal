@@ -891,3 +891,148 @@ function Export_Pdf_Mercal_Por_Programa ($id) {
         http_response_code(400);
     }
 }
+
+
+// --------- USER LECTOR ---------
+
+function Mercal_Viewer_USER () {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+    
+    $sql_programas = "SELECT * FROM mercal_stock_programas ORDER BY id_mercal_stock_programas ASC LIMIT $offset, $limit";
+    $stmt_programas = $conn->prepare($sql_programas);
+    $stmt_programas->execute();
+    $programas = $stmt_programas->fetchAll(PDO::FETCH_ASSOC);
+
+    // Si no viene start o end se toma el mes actual, es decir el primer y ultimo dia del mes
+    $start = isset($_GET['start']) ? $_GET['start'] : date('Y-m-01');
+    $end = isset($_GET['end']) ? $_GET['end'] : date('Y-m-t');
+    
+    $sql_movement = "SELECT programa_id, mercal_stock_programas.programa, type, mercal_stock_programas.code_clave, 
+                    SUM(cantidad_proteina) AS suma_proteina, SUM(cantidad_bolsas) AS suma_bolsas
+                    FROM mercal_recepcion_despacho
+                    LEFT JOIN mercal_stock_programas ON mercal_recepcion_despacho.programa_id = mercal_stock_programas.id_mercal_stock_programas
+                    WHERE fecha BETWEEN :start AND :end
+                    GROUP BY programa_id, type";
+    $stmt_movement = $conn->prepare($sql_movement);
+    $stmt_movement->bindValue(':start', $start);
+    $stmt_movement->bindValue(':end', $end);
+    $stmt_movement->execute();
+    $movements = $stmt_movement->fetchAll(PDO::FETCH_ASSOC);
+
+    $data_return = array();
+
+    foreach ($programas as $programa) {
+        // Busca si en $movements hay un programa_id igual al id_mercal_stock_programas de $programa y si el type es igual a recepcion
+        $despachado = array_filter($movements, function($movement) use ($programa) {
+            return $movement['programa_id'] == $programa['id_mercal_stock_programas'] && $movement['type'] == 'despacho';
+        });
+        $recepcionado = array_filter($movements, function($movement) use ($programa) {
+            return $movement['programa_id'] == $programa['id_mercal_stock_programas'] && $movement['type'] == 'recepcion';
+        });
+
+        $despachado = array_values($despachado);
+        $recepcionado = array_values($recepcionado);
+        
+        $data_return[] = array(
+            'id_mercal_stock_programas' => $programa['id_mercal_stock_programas'], // Se agrega para poder editar el stock desde el modal 'Editar Stock
+            'programa' => $programa['programa'],
+            'code_clave' => $programa['code_clave'],
+            'stock_proteina' => $programa['stock_proteina'],
+            'stock_bolsas' => $programa['stock_bolsas'],
+            'proteina_despachada' => isset($despachado[0]['suma_proteina']) ? $despachado[0]['suma_proteina'] : 0,
+            'bolsas_despachadas' => isset($despachado[0]['suma_bolsas']) ? $despachado[0]['suma_bolsas'] : 0,
+            'proteina_recepcionada' => isset($recepcionado[0]['suma_proteina']) ? $recepcionado[0]['suma_proteina'] : 0,
+            'bolsas_recepcionadas' => isset($recepcionado[0]['suma_bolsas']) ? $recepcionado[0]['suma_bolsas'] : 0,
+        );
+    }
+
+    // Obtener el total
+    $sql_total = "SELECT COUNT(*) AS total FROM mercal_stock_programas";
+    $result_total = $conn->prepare($sql_total);
+    $result_total->execute();
+    $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - MERCAL';
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/mercal/mercal_viewer.php';
+    include_once 'src/blocks/footer.php';
+}
+
+function Movimientos_Programa_USER ($id) {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit();
+    }
+
+    require 'src/database/connection.php';
+
+    $sql = "SELECT * FROM mercal_stock_programas WHERE id_mercal_stock_programas = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->execute();
+    $programa = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$programa) {
+        header('Location: /mercal');
+        exit();
+    }
+
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $offset = ($page - 1) * $limit;
+
+    // Si no viene start o end se toma el mes actual, es decir el primer y ultimo dia del mes
+    $start = isset($_GET['start']) ? $_GET['start'] : date('Y-m-01');
+    $end = isset($_GET['end']) ? $_GET['end'] : date('Y-m-t');
+    $filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : 'all';
+
+    $sql = "SELECT * FROM mercal_recepcion_despacho WHERE programa_id = :id ";
+    if ($filter_type != 'all') {
+        $sql .= "AND type = '$filter_type' ";
+    }
+    $sql .= "AND fecha BETWEEN :start AND :end ORDER BY fecha DESC LIMIT $limit OFFSET $offset";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->bindValue(':start', $start);
+    $stmt->bindValue(':end', $end);
+    $stmt->execute();
+    $movimientos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo '<script>let movimientos = '.json_encode($movimientos).'</script>';
+
+    $sql_total = "SELECT COUNT(*) AS total FROM mercal_recepcion_despacho WHERE programa_id = :id ";
+    if ($filter_type != 'all') {
+        $sql_total .= "AND type = '$filter_type' ";
+    }
+    $sql_total .= "AND fecha BETWEEN :start AND :end";
+    $result_total = $conn->prepare($sql_total);
+    $result_total->bindValue(':id', $id);
+    $result_total->bindValue(':start', $start);
+    $result_total->bindValue(':end', $end);
+    $result_total->execute();
+    $total = $result_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($total / $limit);
+
+    $title = 'MINPPAL - MERCAL - MOVIMIENTOS';
+    include_once 'src/blocks/header.php';
+    include_once 'src/blocks/menu/admin/menu.php';
+    include_once 'src/blocks/menu/admin/menu_responsive.php';
+    include_once 'src/blocks/sidebar/user/sidebarLeft.php';
+    include_once 'src/views/user/companies/mercal/mercal_movimientos.php';
+    include_once 'src/blocks/footer.php';
+}
+
+// --------- USER LECTOR ---------

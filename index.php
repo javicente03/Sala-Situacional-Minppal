@@ -103,6 +103,30 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/mercal-bm/export-pdf/{id}', 'Mercal_Misiones_Detalle_Export_Pdf');
     });
 
+    // USER LECTOR ---------------------------------------------------------------
+    // CNAE
+    $r->addRoute('GET', '/cnae', 'CNAE_Viewer_USER');
+    $r->addRoute('GET', '/cnae/{id}', 'Get_Cnae_Por_Mes_USER');
+
+    // INN
+    $r->addRoute('GET', '/inn', 'INN_Viewer_USER');
+    $r->addRoute('GET', '/inn/{id}', 'Get_INN_Por_Mes_USER');
+
+    // CLAP
+    $r->addRoute('GET', '/clap', 'Clap_Viewer_USER');
+
+    // FUNDAPROAL
+    $r->addRoute('GET', '/fundaproal', 'FUNDAPROAL_Viewer_USER');
+    $r->addRoute('GET', '/fundaproal/{id}', 'Get_FUNDAPROAL_Por_Mes_USER');
+
+    // MERCAL
+    $r->addRoute('GET', '/mercal', 'Mercal_Viewer_USER');
+    $r->addRoute('GET', '/mercal/program/{id}', 'Movimientos_Programa_USER');
+
+    // MERCAL - MISIONES
+    $r->addRoute('GET', '/mercal-bm', 'Mercal_Misiones_Viewer_USER');
+    $r->addRoute('GET', '/mercal-bm/mision/{id}', 'Mercal_Misiones_Detalle_USER');
+
     $r->addRoute('GET', '/generarHash', function() {
         $password = '123456';
         $hash = password_hash($password, PASSWORD_DEFAULT);
