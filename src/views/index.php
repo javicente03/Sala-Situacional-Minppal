@@ -84,7 +84,15 @@
                 <h3 class="titleShadow">
                 Acerca del Ministerio del Poder Popular Para la Alimentación</h3>
                 <p style="text-align: justify;">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias saepe, et repellendus magni facilis esse laudantium quae sequi, necessitatibus cumque sit repudiandae nulla! Nam nulla, consequatur sequi sed iusto tempore iure numquam error provident maxime harum, deleniti et aliquid voluptate ipsa, sint architecto rem animi repudiandae dignissimos iste inventore accusantium ea? Voluptatem, asperiores? Eaque non libero, numquam dolore reprehenderit in doloribus. Voluptatibus quas quibusdam obcaecati quaerat cumque distinctio amet quasi. Sunt fugit soluta quos incidunt voluptatum unde dolore error explicabo, quod quibusdam repellat hic dolor doloribus rerum asperiores quasi. Praesentium ullam exercitationem itaque quia autem suscipit maiores minus omnis. Quibusdam.
+                    Ministerio encargado de velar que se cumpla el derecho constitucional a la alimentación, por cuanto dicta las políticas en esta materia y verifica que las mismas se cumplan para garantizar a toda la población el acceso a los alimentos de la canasta alimentaria a precios justos y de excelente calidad, así como, dirige la política exterior y participación en las negociaciones internacionales en materia de alimentos.
+                    <br><h5 style="margin-top: 20px;">
+                    MISIÓN </h5>
+                    Garantizar el acceso de los alimentos a la población a través de la regulación, formulación, seguimiento y evaluación de políticas en materia de comercio, industria, mercadeo y distribución de alimentos; recepción, almacenamiento, depósito, conservación, transporte, distribución, entrega, colocación, calidad y consumo; inspección, vigilancia, fiscalización y sanción sobre actividades de almacenamiento agrícola y sus actividades conexas administración, operación y explotación de silos, frigoríficos, almacenes y depósitos agrícolas propiedad del Estado; regulación y expedición de permisos, autorizaciones, licencias, certificados y demás tramites y actos necesarios en materia de exportación e importación en el sector de alimentos y alimentación.
+                    Así como, dirigir la política exterior y participación en las negociaciones internacionales en materia de alimentos y alimentación; promoción de estrategias para equilibrar la oferta y demanda de los circuitos agroalimentarios; regulación de los productos alimenticios, completando los ciclos de producción y comercialización, concertación, análisis y la fijación de precios y tarifas de productos y servicios alimenticios; políticas de financiamiento en el sector de producción y comercio de alimento; políticas para la adquisición, instalación y administración de maquinarias y equipos necesarios para la producción y comercialización de alimentos, en coordinación con los órganos competentes; a fin de mejorar la calidad de vida y lograr la seguridad alimentaria de la nación, en el marco del modelo productivo socialista.
+                    <br><h5 style="margin-top: 20px;">
+                    VISIÓN </h5>
+                    Ser el órgano de la Administración Pública rector y coordinador de la política alimentaria, capaz de impulsar la seguridad y soberanía alimentaria a toda la población, en articulación con los órganos competentes y el sector productivo, con predominio de la producción nacional, basado en el modelo social productivo eficiente, socialista, humanista y endógeno; con la participación masiva de la comunidad, en el marco de los principios y valores de la revolución bolivariana.
+
                 </p>
             </div>
         </div>
@@ -154,7 +162,7 @@
         <div class="row wow fadeInUp">
             <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
                 <h3 class="text-uppercase">Preguntas Frecuentes</h3>
-                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor coli incididunt ut labore Lorem ipsum madolor sit amet.</p>
+                <p>Aquí encontrarás algunas dudas recurrentes respecto al sistema.</p>
             </div>
         </div>
         <div class="space-60"></div>
@@ -164,41 +172,60 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Sedeiusmod tempor inccsetetur aliquatraiy? </a></h4>
+                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">¿Cómo puedo crear un nuevo usuario?</a></h4>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse in">
-                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodas temporo incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrd exercitation ullamco laboris nisi ut aliquip ex comodo consequat. Duis aute dolor in reprehenderit.</div>
+                            <div class="panel-body">Para esto necesitas permisos de administrador, una vez inicies sesión, debes dirigirte al modulo <b>Administración de Usuarios</b>,
+                            podrás ver el listado y en el menú del lado izquierdo encontras la opcion <b>Crear</b>. Una vez en la pantalla de creación, completa los datos solicitados
+                            y presiona el botón <b>Crear Usuario</b>
+                        </div>
                         </div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Tempor inccsetetur aliquatraiy?</a></h4>
+                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">¿Qué diferencias hay en entre el usuario Administrador y Lector?</a></h4>
                         </div>
                         <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                            <div class="panel-body">
+                                El usuario <b>Administrador</b> tiene acceso a todas las funcionalidades del sistema, incluyendo la carga de información y administración de usuarios.
+                                El usuario <b>Lector</b> solo tiene acceso a la visualización de la información, no puede cargar información ni administrar usuarios.
+                            </div>
                         </div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Lorem ipsum dolor amet, consectetur adipisicing ?</a></h4>
+                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">¿Cuántas empresas adscritas se manejan en el sistema?</a></h4>
                         </div>
                         <div id="collapse3" class="panel-collapse collapse">
-                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                            <div class="panel-body">
+                                5 empresas adscritas al Ministerio del Poder Popular para la Alimentación.
+                                INN, CNAE, CLAP, FUNDAPROAL y MERCAL.
+                                Sin embargo MERCAL cuenta con dos modulos a disposición, donde se administra la información relacionada a 
+                                los <b>Programas Sociales</b> y las <b>Bases de Misiones</b>. 
+                            </div>
                         </div>
                     </div>
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Lorem ipsum dolor amet, consectetur adipisicing ?</a></h4>
+                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4">¿Cómo se carga información a cada módulo?</a></h4>
                         </div>
                         <div id="collapse4" class="panel-collapse collapse">
-                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                            <div class="panel-body">
+                                Cada módulo guarda diferentes datos, sin embargo el flujo de carga es similar para todos.
+                                Debes dirigirte al módulo que deseas cargar información.
+                                Para CNAE, INN y FUNDAPROAL, la data es separada de manera mensual automaticamente, solo debes configurar los valores asignados a cada mes por municipio.
+                                Para CLAP, debes iniciar una nueva entrega estableciendo las fechas y los costos del mismo.
+                                Para Mercal Programas Sociales, la información se registra a modo de entrada y salida de mercancía por cada programa, esta es separada mediante periodos de tiempo,
+                                establecidos a gusto del usuario.
+                                Para Mercal Base de Misiones, se registran las entregas realizadas a cada base de misiones, separadas por periodos de tiempo establecidos a gusto del usuario.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="hidden-xs hidden-sm col-md-5 col-md-offset-1 wow fadeInRight ">
-                <img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/tpl2/images/2mobile.png' ?>" alt="">
+                <img src="<?php echo $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].'/public/images/Modulo de vista de INN.png' ?>" alt="">
             </div>
         </div>
     </div>
